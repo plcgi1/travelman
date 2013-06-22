@@ -1,0 +1,15 @@
+<section ng-switch="mode">
+	<div ng-switch-when="view">
+	  <ul class="nav">
+		<li ng-repeat="item in project.goals" class="alert alert-info">{{item.name}}</li>
+	  </ul>
+	</div>
+	<div ng-switch-when="edit">
+	  <a class="btn" ng-click="addGoal(project)"><i class="icon-plus"></i> Добавить</a>
+	  <div ng-repeat="item in project.goals">
+		<input type="text" ng-model="item.name" enter-submit='save("ProjectGoals",item)' class="span4"/>
+		<input type="hidden" ng-model="item.id"/>
+		<button type="button" class="close" data-dismiss="alert" ng-click="remove(project,item)">&times;</button>
+	  </div>
+	</div>
+</section>

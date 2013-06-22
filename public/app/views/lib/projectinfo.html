@@ -1,0 +1,30 @@
+<section ng-switch="mode">
+	<div ng-switch-when="view">
+		<h5>{{project.name}}</h5>
+		C <span class="" ng-bind="project.from">
+		</span>
+		До <span class="" ng-bind="project.to">
+		</span>
+	</div>
+	<div ng-switch-when="edit">
+		<div class="control-group">
+		<div class="controls">
+		  <input type="text" class="input-medium span8" ng-model="project.name" name="name" id="project-name" required/>
+		</div>
+		<span class="span4">
+			<span>Дата начала</span>
+			<div class="control-group input-append">
+				<input type="text" ng-model="project.from" data-date-format="yyyy-mm-dd" bs-datepicker>
+				<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			</div>
+		</span>
+		
+		<span class="span4">
+			<span>Дата окончания</span>
+			<div class="control-group input-append">
+				<input type="text" ng-model="project.to" data-date-format="yyyy-mm-dd" bs-datepicker>
+				<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			  </div>
+		</span>
+	</div>
+</section>

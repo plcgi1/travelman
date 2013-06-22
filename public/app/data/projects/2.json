@@ -1,0 +1,23 @@
+{
+	"id" : "2",
+	"name" : "Поездка в Монголию 2",
+	"from" : "2013-01-01",
+	"to" : "2013-04-04",
+	"goals" : [
+		{ "value" : "v1", "label" : "L1" },
+		{ "value" : "v2", "label" : "L2" },
+		{ "value" : "v3", "label" : "L3" }
+	],
+	"geo" : [
+		{ "latitude" : "55.167596", "longitude" : "28.248897" },
+		{ "latitude" : "58", "longitude" : "28.248897" },
+		{ "latitude" : "56.167596", "longitude" : "28.248897" }
+	],
+	"participants" : [
+		{ "fio" : "user1", "id" : "1", "filename" : "images/no-photo.gif" },
+		{ "fio" : "user2", "id" : "2", "filename" : "images/no-photo.gif" },
+		{ "fio" : "user3", "id" : "3", "filename" : "images/no-photo.gif" },
+		{ "fio" : "user4", "id" : "4", "filename" : "images/no-photo.gif" },
+		{ "fio" : "user5", "id" : "5", "filename" : "images/no-photo.gif" }
+	]
+}

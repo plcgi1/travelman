@@ -1,0 +1,1 @@
+plackup -R /home/plcgi/www/woa-toolkit/apps/Ahs2/lib -I/home/plcgi/www/woa-toolkit/apps/Ahs2/lib -p 3030 -a /home/plcgi/www/woa-toolkit/apps/Ahs2/psgi/Ahs2.psgi

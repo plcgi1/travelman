@@ -1,0 +1,3 @@
+<ul class="nav top-navbar"  ng-controller="NavCtrl">
+  <li ng-repeat="item in model" class="{{item.selected}}" ng-click="switchTab(item,$index)"><a href="{{item.path}}">{{item.label}}</a></li>
+</ul>

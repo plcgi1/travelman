@@ -1,0 +1,141 @@
+<section ng-switch="mode">
+  <div class="badge badge-important" ng-model="error"></div>
+  <div ng-switch-when="view">
+    <legend>{{meta.label}}</legend>
+    <div ng-repeat="group in meta.groups">
+      <h4 class="alert alert-info"><a name="{{group.name}}">{{group.label}}</a></h4>
+      <div ng-repeat="field in group.fields" class="well">
+        <div>
+          {{field.label}} : <span  class="pull-right label" ng-model="model[field.name]">{{ model[field.name]|getValue }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-switch-when="edit">
+    <form name="{{meta.formId}}" id="{{meta.formId}}" class="form-horizontal well" ng-submit="save(account)">
+      <fieldset>
+        <legend>{{meta.label}}</legend>
+        <div ng-repeat="group in meta.groups">
+          <h4 class="alert alert-info"><a name="{{group.name}}">{{group.label}}</a></h4>
+          <div ng-repeat="field in group.fields">
+            <ng-switch on="field.type">
+              <div ng-switch-when="id">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <span class="label" ng-bind="model[field.name]">{{field.value}}</span>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="boolean">
+                <div class="control-group">
+                  <div class="controls">
+                    <label class="checkbox">
+                      <input class="pull-right" type="checkbox" name="{{field.name}}" id="{{field.id}}" value="{{field.value}}"/> {{field.label}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="reference">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <span class="label" ng-bind="model[field.name]">{{field.value}}</span>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="string">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="picklist">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                     <select ng-model="model[field.name]" name="{{field.name}}" id="{{field.id}}" dataType="{{field.type}}" ng-options="opt.value as opt.label for opt in field.picklistValues">
+                      <option value="">-- choose {{field.label}} --</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="inputtextlist">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                     <input type="text" ng-model="model[field.name]" name="{{field.name}}" id="{{field.id}}" dataType="{{field.type}}" ng-repeat="opt in field.picklistValues">
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="textarea">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                     <textarea id="{{field.name}}" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="phone">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="url">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="currency">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="int">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="datetime">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <span class="controls input-append date" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                      <input class="span4" size="16" type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}" readonly>
+                      <span class="add-on"><i class="icon-calendar"></i></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div ng-switch-when="date">
+                <div class="control-group">
+                  <label class="control-label" for="{{field.name}}">{{field.label}}</label>
+                  <div class="controls">
+                    <input type="text" ng-model="model[field.name]" name="{{field.name}}" dataType="{{field.type}}" id="{{field.id}}" value="{{field.value}}"/>
+                  </div>
+                </div>
+              </div>
+            </ng-switch>
+          </div>
+        </div>
+        <button type="submit" class="btn" ng-model="model">Сохранить</button>
+      </fieldset>
+    </form>
+  </div>
+  <div ng-switch-default="view"></div>
+  
+</section>

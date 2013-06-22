@@ -1,0 +1,7 @@
+[
+	{ "label" : "Поездка в Монголию", "path": "#/projects/project/1/view" },
+	{ "label" : "Развлекуха в Пакистане", "path": "#/projects/project/2/view" },
+	{ "label" : "Еще кудато", "path": "#/projects/project/3/view" },
+	{ "label" : "И сюда кудато", "path": "#/projects/project/4/view" },
+	{ "label" : "Фывфывфы выфв ффыв фыв", "path": "#/projects/project/5/view" }
+]

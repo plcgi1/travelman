@@ -1,0 +1,101 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/magic.css">
+    <link rel="stylesheet" href="components/bootstrap-datepicker/css/datepicker.css">
+   
+    <!-- endbuild -->
+  </head>
+  <body ng-app="AhsApp" data-ng-init="animationsEnabled=true" data-ng-class="{animations: animationsEnabled}">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="components/es5-shim/es5-shim.js"></script>
+      <script src="components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+  <div class="container">
+      <p class="lead">&nbsp;</p>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <div class="navbar-content">
+                <span class="app-loading-container">
+                  <span class="app-loading-animation" data-ng-class="status"></span>
+                </span>
+                <navbar model="data/acl.json" ></navbar>
+                <dropdown model="/ahs/auth" class="pull-right" ng-controller="AuthCtrl"></dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p>
+
+      <div class="well">
+          <div class="row-fluid" data-ng-view ng-animate="{enter: 'animate-enter'}"></div>
+      </div>
+    </div>
+  
+    <!-- templates -->
+    
+    <script src="components/jquery/jquery.js"></script>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- build:js scripts/scripts.js -->
+    <script src="components/angular.js-master/build/angular.js"></script>
+    <script src="components/angular.js-master/build/angular-resource.js"></script>
+    <script src="components/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="components/bootstrap/js/bootstrap-transition.js"></script>
+    <script src="components/bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="components/bootstrap/js/bootstrap-modal.js"></script>
+    <script src="components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    
+    
+    <script src="components/angular-strap/dist/angular-strap.js"></script>
+    
+    <script src="components/plcgi/eventbus.js"></script>
+    <script src="components/plcgi/navbar.js"></script>
+    <script src="components/plcgi/list.js"></script>
+    <script src="components/plcgi/dropdown.js"></script>
+    <script src="components/plcgi/location.js"></script>
+    <script src="components/plcgi/mode.js"></script>
+    <script src="components/plcgi/progress.js"></script>
+    
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/projects.js"></script>
+    <script src="scripts/services/project-info.js"></script>
+    <script src="scripts/services/participants.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/projects.js"></script>
+    <script src="scripts/controllers/project.js"></script>
+    <script src="scripts/controllers/participants.js"></script>
+    
+    <script src="scripts/directives/info.js"></script>
+    <script src="scripts/directives/enter-key.js"></script>
+    <script src="scripts/directives/goals.js"></script>
+    <script src="scripts/directives/participants.js"></script>
+    <script src="scripts/directives/geo.js"></script>
+    <!-- endbuild -->
+  
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
