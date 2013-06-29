@@ -10,6 +10,8 @@
 		</ul>
 	</div>
 	<div ng-switch-when="edit">
+		<a class="btn pull-right save" ng-show="mode=='edit'" ng-click="save_geo()"><i class=" icon icon-check"></i></a>
+		<br/><br/>
 		<div ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 			<button type="button" class="close" data-dismiss="alert" ng-click="removeMarker(item)">&times;</button>
 			<div class="">Ш: {{item.getPosition().jb}}</div>

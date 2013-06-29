@@ -7,24 +7,65 @@ sub save {
    my ( $self, $param ) = @_;
 
     my $model       = $self->get_model;
-    my $res;   
-    #my @places = $model->resultset('ProjectPlace')->search({
-    #    project_id  => $param->{id}
-    #});
-    #foreach ( @places ) {
-    #    $_->delete;
-    #}
-    #foreach ( @{$param->{participants}} ) {
-    #    $model->resultset('UserProject')->find_or_create({
-    #        user_id     => $_,
-    #        project_id  => $param->{id}
-    #    });
-    #}
-    #my $res = $self->SUPER::get($param);
+    my $res = { res => 'ok' };
+    
+    my @geo = $model->resultset('PlaceProject')->search(
+        {
+            'me.project_id' => $param->{id},
+            'place.lattitude' => $param->{lattitude},
+            'place.longtitude' => $param->{longtitude}
+        },
+        {
+            join    => [qw/place/],
+            limit   => 1,
+            select  => [qw/place.lattitude place.longtitude/],
+            as      => [qw/latitude longtitude/],
+        }
+    );
+    unless ($geo[0]) {
+        my $place = $model->resultset('Place')->create({
+            created     => time,
+            updated     => time,
+            lattitude   => $param->{lattitude},
+            longtitude  => $param->{longtitude},
+        });
+        $model->resultset('PlaceProject')->create({
+            place_id    => $place->id,
+            project_id  => $param->{id},
+        });        
+    }
+    my $res = $self->SUPER::get($param);
 
     return $res;
 }
 
+sub remove {
+   my ( $self, $param ) = @_;
+
+    my $model       = $self->get_model;
+    my $res = { res => 'ok' };
+    
+    my @geo = $model->resultset('PlaceProject')->search(
+        {
+            'me.project_id'     => $param->{id},
+            'place.lattitude'   => $param->{lattitude},
+            'place.longtitude'  => $param->{longtitude}
+        },
+        {
+            join    => [qw/place/],
+        }
+    );
+    if (int(@geo)>0) {
+        foreach ( @geo ) {
+            my $place = $_->place;
+            $_->delete;
+            $place->delete;            
+        }
+    }
+    my $res = $self->SUPER::get($param);
+
+    return $res;
+}
 
 1;
 

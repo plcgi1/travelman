@@ -14,7 +14,8 @@ app.services.factory('ProjectGoals', function($resource){
 });
 app.services.factory('ProjectGeo', function($resource){
 		return $resource('/ahs/projects/project/place', {}, {
-			save: { method:'POST',isArray:false }
+			save: { method:'POST',isArray:false },
+			remove: { method:'DELETE',isArray:false }
 		}
 	)
 });

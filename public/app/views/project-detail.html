@@ -12,10 +12,11 @@
   </div>
   <div class="accordion" id="accordion2">
 	<div class="accordion-group">
-	  <div class="accordion-heading" ng-click="$event.preventDefault()">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#info" >
+	  <div class="accordion-heading">
+		<center><h4>
 		  Данные
-		</a>
+		</h4>
+		  </center>
 	  </div>
 	  <div id="info" class="accordion-body collapse in">
 		<div class="accordion-inner">
@@ -25,36 +26,37 @@
 	  </div>
 	</div>
 	<div class="accordion-group" ng-show="project.id!='new'">
-	  <div class="accordion-heading" ng-click="$event.preventDefault()">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#goals">
+	  <div class="accordion-heading">
+		<h4>
 		  Цели
-		</a>
+		</h4>
 	  </div>
-	  <div id="goals" class="accordion-body collapse">
+	  <div id="goals" class="accordion-body collapse in">
 		<div class="accordion-inner">
 		  <goals ng-model="project.goals" mode="view"></goals>
 		</div>
 	  </div>
 	</div>
 	<div class="accordion-group" ng-show="project.id!='new'">
-	  <div class="accordion-heading" ng-click="$event.preventDefault()">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#participants">
+	  <div class="accordion-heading">
+		<h4>
 		  Участники
-		</a>
+		</h4>
 	  </div>
-	  <div id="participants" class="accordion-body collapse">
+	  <div id="participants" class="accordion-body collapse in">
 		<div class="accordion-inner">
 		  <participants ng-model="project.participants" mode="view"></participants>
 		</div>
 	  </div>
 	</div>
 	<div class="accordion-group" ng-show="project.id!='new'">
-	  <div class="accordion-heading" ng-click="$event.preventDefault()">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#place">
+	  <div class="accordion-heading" >
+		<h4>
 		  Местоположение
-		</a>
+		  
+		</h4>
 	  </div>
-	  <div id="place" class="accordion-body collapse">
+	  <div id="place" class="accordion-body collapse in">
 		<div class="accordion-inner">
 		  <geo mode="view"></geo>
 		</div>

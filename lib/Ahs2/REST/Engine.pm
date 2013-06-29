@@ -56,6 +56,7 @@ sub _fill_args {
     if( $session && $session->{user} ){
         $param->{user_id} = $session->{user}->{id};
     }
+			
     $self->SUPER::_fill_args($data);
     if ( $param ) {
         if(ref $param eq 'ARRAY'){

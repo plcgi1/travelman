@@ -1,31 +1,28 @@
+(function(){
 'use strict';
 var app = window.app;
 app.controllers
-    .controller('ProjectCtrl', function ($scope,$http,$routeParams,$rootScope,Project,Mode,EventBus,ProjectInfo,ProjectGoals,appLoading) {
+    .controller('ProjectCtrl', function ($scope,$http,$routeParams,$rootScope,Project,Mode,EventBus,ProjectInfo,ProjectGoals,ProjectGeo) {
         var save = $('.save');
         var map = {
             'ProjectInfo' : ProjectInfo,
-            'ProjectGoals' : ProjectGoals
+            'ProjectGoals' : ProjectGoals,
+            'ProjectGeo' : ProjectGeo
         };
+        function init (args) {
+            $scope.project = Project.query(
+                {project_id: $routeParams.project_id},
+                function(data) {
+                   
+                    $scope.project   = data;
+                    EventBus.prepForBroadcast('geoModelLoaded','model',$scope.project);
+                },
+                function (args) {
+                    
+                }
+            );
+        }
         
-        //appLoading.loading();
-        Project.get(
-            {project_id: $routeParams.project_id},
-            function(data) {
-                //$scope.project   = {};
-                //
-                //for (var key in data) {
-                //    $scope.project[key] = data[key];
-                //}
-                $scope.project   = data;
-                //$scope.$broadcast('geoModelLoaded',data);
-                EventBus.prepForBroadcast('geoModelLoaded','model',$scope.project);
-                //appLoading.ready();
-            },
-            function (args) {
-                
-            }
-        );
         $scope.dateOptions = { format: 'yyyy-mm-dd' };
         
         $scope.setMode = function(mode){
@@ -34,7 +31,6 @@ app.controllers
         };
         
         $scope.save = function(action,data){
-            //appLoading.loading();
             map[action].save($scope.project,function(data){
                 if (!(data.goals && data.goals.length>0)) {
                     data.goals = [];
@@ -43,7 +39,6 @@ app.controllers
                     data.geo = [];
                 }
                 $scope.project = data;
-                //appLoading.ready();
             });
         };
         
@@ -51,8 +46,13 @@ app.controllers
             $rootScope.loginStatus = data.loginStatus;
         });
         
-        setTimeout(function(){
+        //setTimeout(function(){
             $scope.setMode($routeParams.mode);
-        },0);        
+            if (!$scope.project) {
+                init();
+            }
+            
+        //},0);        
     }
 );
+})();

@@ -2,7 +2,7 @@ package Ahs2::REST::ProjectPlace::SP;
 use strict;
 use Ahs2::REST::ProjectPlace::Backend;
 use Ahs2::REST::ProjectPlace::Map;
-use Ahs2::REST::Engine;
+use Ahs2::REST::ProjectPlace::Engine;
 use Ahs2::REST::View;
 
 use base 'WOA::REST::ServiceProvider';
@@ -29,7 +29,7 @@ sub service_object {
         }
     );
 
-    my $rest = Ahs2::REST::Engine->new(
+    my $rest = Ahs2::REST::ProjectPlace::Engine->new(
         {
             map       => Ahs2::REST::ProjectPlace::Map->get_map,
             backend   => $backend,

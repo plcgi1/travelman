@@ -15,10 +15,9 @@ my $map = [
             param         => [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
-				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
-				{ name => 'lattitude',       rules => [ {rule => 'float', } ], error => "Bad lattitude" },
-				{ name => 'longtitude',       rules => [ {rule => 'float', } ], error => "Bad longtitude" },
-				{ name => 'name',       rules => [ {rule => 'anyText', } ], error => "Bad anyText" },
+				{ name => 'id',         rules => [ {rule => 'integer' } ], required => 1, error => "Bad id" },
+				{ name => 'lattitude',  rules => [ {rule => 'float', } ], required => 1, error => "Bad lattitude" },
+				{ name => 'longtitude', rules => [ {rule => 'float', } ], required => 1, error => "Bad longtitude" },
             ]
         },
         # service output description
@@ -31,35 +30,35 @@ my $map = [
         # maybe POST GET PUT DELETE
         req_method => 'POST'
     },
-	{
-        # regexp or absolute value for url to service
-        regexp    => '/ahs/projects/project/place$',
-        # func name in Backend module
-        func_name => 'get',
-        # unique name for service - used in javascript validator rules
-        name      => 'PRJ_PLACE_GET',
-        
-        in        => {
-            skip_from_uri => 1,
-            param         => [
-                # some patterns to define field names and validation rules
-                # all rule names - in WOA::Validator::Rules::Base
-				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
-				{ name => 'lat',       rules => [ {rule => 'integer', } ], error => "Bad lattitude" },
-				{ name => 'lon',       rules => [ {rule => 'datetime', } ], error => "Bad longtitude" },
-				{ name => 'name',       rules => [ {rule => 'anyText', } ], error => "Bad anyText" },
-            ]
-        },
-        # service output description
-        out			=>	{
-            mime_type => 'text/javascript',
-            # methods from View - you can implement your own
-            view_method => 'as_json'
-        },
-        
-        # maybe POST GET PUT DELETE
-        req_method => 'GET'
-    },
+#	{
+#        # regexp or absolute value for url to service
+#        regexp    => '/ahs/projects/project/place$',
+#        # func name in Backend module
+#        func_name => 'get',
+#        # unique name for service - used in javascript validator rules
+#        name      => 'PRJ_PLACE_GET',
+#        
+#        in        => {
+#            skip_from_uri => 1,
+#            param         => [
+#                # some patterns to define field names and validation rules
+#                # all rule names - in WOA::Validator::Rules::Base
+#				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
+#				{ name => 'lat',       rules => [ {rule => 'integer', } ], error => "Bad lattitude" },
+#				{ name => 'lon',       rules => [ {rule => 'datetime', } ], error => "Bad longtitude" },
+#				{ name => 'name',       rules => [ {rule => 'anyText', } ], error => "Bad anyText" },
+#            ]
+#        },
+#        # service output description
+#        out			=>	{
+#            mime_type => 'text/javascript',
+#            # methods from View - you can implement your own
+#            view_method => 'as_json'
+#        },
+#        
+#        # maybe POST GET PUT DELETE
+#        req_method => 'GET'
+#    },
 	
 	{
         # regexp or absolute value for url to service
@@ -75,6 +74,8 @@ my $map = [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
                 { name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
+				{ name => 'lattitude',  rules => [ {rule => 'float', } ], required => 1, error => "Bad lattitude" },
+				{ name => 'longtitude', rules => [ {rule => 'float', } ], required => 1, error => "Bad longtitude" },
             ]
         },
         # service output description

@@ -1,5 +1,0 @@
-[
-	{ "label": "О проекте", "path" : "#/", "name" : "about", "show" : "1" },
-	{ "label": "Проекты", "path" : "#/projects","name" : "projects", "show" : "1" },
-	{ "label": "Участники", "path" : "#/participants","name" : "participants", "show" : "1" }
-]

@@ -1,8 +1,6 @@
 'use strict';
 
-function ParticipantsCtrl($scope,$element,$attrs,Participants,appLoading) {
-    //appLoading.ready();
-    
+function ParticipantsCtrl($scope,$element,$attrs,Participants) {
     $scope.participants =  Participants.query({}, function(data) {});
     $scope.dialog = $('#ParticipantsDlg');
     
