@@ -11,19 +11,25 @@ sub save {
     
     my @geo = $model->resultset('PlaceProject')->search(
         {
-            'me.project_id' => $param->{id},
-            'place.lattitude' => $param->{lattitude},
-            'place.longtitude' => $param->{longtitude}
+            'me.project_id' 	=> $param->{id},
+			'me.place_id'         => $param->{location_id}
         },
         {
             join    => [qw/place/],
             limit   => 1,
-            select  => [qw/place.lattitude place.longtitude/],
-            as      => [qw/latitude longtitude/],
+            select  => [qw/me.place_id place.lattitude place.longtitude place.id place.name/],
+            as      => [qw/place_id latitude longtitude id name/],
         }
     );
-    unless ($geo[0]) {
-        my $place = $model->resultset('Place')->create({
+    if ($geo[0]) {
+		my $place = $geo[0]->place;
+		$place->updated(time);
+		$place->lattitude($param->{lattitude});
+		$place->longtitude($param->{longtitude});
+		$place->update();
+    }
+	else {
+		my $place = $model->resultset('Place')->create({
             created     => time,
             updated     => time,
             lattitude   => $param->{lattitude},
@@ -32,8 +38,8 @@ sub save {
         $model->resultset('PlaceProject')->create({
             place_id    => $place->id,
             project_id  => $param->{id},
-        });        
-    }
+        });    
+	}
     my $res = $self->SUPER::get($param);
 
     return $res;

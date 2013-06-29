@@ -97,36 +97,28 @@ sub _get_by_id {
         { 'me.project_id' => $param->{id} },
         {
             join    => [qw/place/],
-            select  => [qw/place.lattitude place.longtitude/],
-            as      => [qw/latitude longtitude/],
+            select  => [qw/place.lattitude place.longtitude place.id place.name/],
+            as      => [qw/latitude longtitude id name/],
         }
     );
     foreach ( @geo ) {
         push @{$res->{geo}}, {
             lattitude    =>  $_->get_column('latitude'),
-            longtitude  =>  $_->get_column('longtitude')
+            longtitude  =>  $_->get_column('longtitude'),
+            id          =>  $_->get_column('id'),
+            name        =>  $_->get_column('name'),
         };
     }
     unless ( $res->{geo} ) {
         $res->{geo} = [];
     }
-    #my @participants = $model->resultset('User')->outer_users({},{ args => [$param->{id}] });
-    #foreach ( @participants ) {
-    #    # me.login,me.lname,me.fname,me.id,up.project_id,ui.filename
-    #    # { "fio" : "user1", "id" : "1", "filename" : "images/no-photo.gif" },
-    #    push @{$res->{participants}},{
-    #        "fio" => $_->[0],
-    #        "id" => $_->[3],
-    #        "filename" => $_->[5] || '/img/no-photo.gif',
-    #        "selected" => $_->[6] == 1 ? 'selected' : ''
-    #    };
-    #}
+    
     my @users = $model->resultset('UserInfo')->search(
         {},
         {
-            join => [qw/user/],
-            select => [qw/user.login user.fname user.lname me.filename user.id/],
-            as => [qw/login fname lname filename id/],
+            join    => [qw/user/],
+            select  => [qw/user.login user.fname user.lname me.filename user.id/],
+            as      => [qw/login fname lname filename id/],
             order_by => 'user.login'
         }
     );

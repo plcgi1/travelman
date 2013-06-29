@@ -97,7 +97,7 @@ Related object: L<Ahs2::Model::DBIx::Result::PlaceProject>
 =cut
 
 __PACKAGE__->has_many(
-  "place_projects",
+  "place",
   "Ahs2::Model::DBIx::Result::PlaceProject",
   { "foreign.place_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },

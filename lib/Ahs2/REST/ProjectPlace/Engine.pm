@@ -8,24 +8,24 @@ use parent 'Ahs2::REST::Engine';
 
 __PACKAGE__->mk_accessors(qw/model session formatter config logger res/);
 
-sub _fill_args {
-    my ( $self, $data ) = @_;
-		
-	$self->SUPER::_fill_args($data);
-	
-	warn Dumper $data;
-	
-	#my $participants = $data->[1]->{value};
-	#my @a;
-	#foreach ( @$participants ) {
-	#	if ( $_->{selected} eq 'selected' ) {
-	#		push @a,$_->{id};
-	#	}		
-	#}
-	#$data->[1]->{value} = \@a;
-	
-    return;
-}
+#sub _fill_args {
+#    my ( $self, $data ) = @_;
+#		
+#	$self->SUPER::_fill_args($data);
+#	
+#	warn Dumper $data;
+#	
+#	#my $participants = $data->[1]->{value};
+#	#my @a;
+#	#foreach ( @$participants ) {
+#	#	if ( $_->{selected} eq 'selected' ) {
+#	#		push @a,$_->{id};
+#	#	}		
+#	#}
+#	#$data->[1]->{value} = \@a;
+#	
+#    return;
+#}
 # sub check_access { return 1; }
 
 1;

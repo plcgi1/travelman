@@ -16,6 +16,7 @@ my $map = [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
 				{ name => 'id',         rules => [ {rule => 'integer' } ], required => 1, error => "Bad id" },
+				{ name => 'location_id',         rules => [ {rule => 'integer' } ], error => "Bad location_id" },
 				{ name => 'lattitude',  rules => [ {rule => 'float', } ], required => 1, error => "Bad lattitude" },
 				{ name => 'longtitude', rules => [ {rule => 'float', } ], required => 1, error => "Bad longtitude" },
             ]

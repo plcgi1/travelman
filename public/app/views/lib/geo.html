@@ -1,36 +1,41 @@
-<div class="map pull-left" style="height: 500px; width: 70%"></div>
+<div class="map" style="height: 500px; width: 100%"></div>
 
-<section ng-switch="mode" class="span3 pull-right" ng-model="markers">
+<script type="text/html" id="geoplaceData">
+<section ng-switch="mode" class="span3 pull-right" ng-model="markers" style="position:relative;margin-right:10px;">
 	<div ng-switch-when="view">
 		<ul class="nav">
 			<li ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item,this)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
-				Ш: {{item.getPosition().jb}}<br/>
-				Д: {{item.getPosition().kb}}
+				Название: {{item.marker.getTitle()}}<br/>
+				Ш: {{item.marker.getPosition().jb}}<br/>
+				Д: {{item.marker.getPosition().kb}}
 			</li>
 		</ul>
 	</div>
-	<div ng-switch-when="edit">
-		<a class="btn pull-right save" ng-show="mode=='edit'" ng-click="save_geo()"><i class=" icon icon-check"></i></a>
+	<div ng-switch-when="edit" style="position:relative;margin-right:10px;">
+		<!--<a class="btn pull-right save" ng-show="mode=='edit'" ng-click="openInfoWindow()"><i class=" icon icon-plus"></i>&nbsp;Добавить</a>-->
 		<br/><br/>
 		<div ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 			<button type="button" class="close" data-dismiss="alert" ng-click="removeMarker(item)">&times;</button>
-			<div class="">Ш: {{item.getPosition().jb}}</div>
-			<div class="">Д: {{item.getPosition().kb}}</div>			
+			<!--<div class="" ng-model="item.marker.getTitle()">Название: {{item.marker.getTitle()}}</div>-->
+			<div class="" ng-bind="item.marker.getPosition().jb">Ш: {{item.marker.getPosition().jb}}</div>
+			<div class="" ng-bind="item.marker.getPosition().kb">Д: {{item.marker.getPosition().kb}}</div>			
 		</div>
 	</div>
 </section>
-	
-<div id="geoplaceDlg" class="modal hide fade" tabindex="-1" role="dialog" >
-  <form method="post" accept-charset="UTF-8" id="geoplace">
-    <div class="modal-body">
+</script>
+
+<script type="text/html" id="geoplaceDlg">
+<div class="google-map">
+    <div class="">
         <label class="string required" for="name">Название места</label>
-        <textarea name="name" id="name"></textarea>
-        <input type="hidden" name="lattitude" id="lattitude"/>
-        <input type="hidden" name="longtitude" id="longtitude"/>
+        <input type="text" name="name" ng-model="currentMarker.name"/>
+		<label class="string required" for="lattitude">Широта</label>
+        <input type="text" name="lattitude" id="lattitude" ng-model="currentMarker.lat"/>
+		<label class="string required" for="longtitude">Долгота</label>
+        <input type="text" name="longtitude" id="longtitude" ng-model="currentMarker.lng"/>
         <div>
-        	<a class="btn save" id="saveGeodata" href="#">Сохранить</a>
-        	<a class="btn edit hide" id="editGeodata" href="#">Редактировать</a>
+        	<a class="btn save" id="saveGeodata" ng-click="saveGeo()">Сохранить</a>
         </div>
     </div>
-  </form>
 </div>
+</script>
