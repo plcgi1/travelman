@@ -2,6 +2,7 @@ use common::sense;
 use Log::Log4perl;
 use File::Basename;
 use Plack::Builder;
+use Plack::Middleware::OAuth::UserInfo;
 use Plack::Middleware::WOAx::App;
 
 use WOA::Config::Provider;
@@ -25,6 +26,7 @@ use JSON::XS qw/encode_json decode_json/;
 use Ahs2::Model::DBIx;
 use Ahs2::Formatter;
 use Ahs2::RouteMap;
+use Ahs2::Model::Oauth;
 
 my $app_root    = dirname(__FILE__).'/../';
 
@@ -70,6 +72,7 @@ my $controller_param = {
 };
 
 my $rules = Ahs2::RouteMap->get_rules;
+
 my $app = Plack::Middleware::WOAx::App->new({
     service_provider =>  WOA::REST::ServiceProvider::Loader->new({
         rules => $rules
@@ -83,16 +86,41 @@ builder {
     enable "Plack::Middleware::ContentMD5";
     enable "Session",   store       => "File";
     
-    #enable 'AutoRefresh', dirs => [ qw/public/ ], filter => qr/\.(swp|bak)/;
-               
     # uncomment it if you need some state for all pages and request
-    #enable "Plack::Middleware::WOAx::Project";
+    # enable "Plack::Middleware::WOAx::Project";
     
     # from $env->{'psgix.logger'}
-    enable "Log4perl", category => "main";
+    enable "Log4perl", category => "main";    
+    
+    enable "OAuth",
+        on_success => sub {
+            my ($self,$token) = @_;
+            my $env = $self->env;
         
+            my $config = $self->config;   # provider config
+            
+            my $userinfo = Plack::Middleware::OAuth::UserInfo->new( 
+                token =>  $token , 
+                config => $config
+            );
+            my $info_hash = $userinfo->ask( $self->{provider} );   # load Plack::Middleware::OAuth::UserInfo::Twitter
+            my $auth = Ahs2::Model::Oauth->new({ model => $model, config => $config, session => $self->{env}->{'psgix.session'} });
+            use Data::Dumper;
+            warn Dumper $info_hash;
+            my $res = $auth->login($info_hash,$self->{provider});
+            
+            return $self->redirect( $res->{location} );
+        },
+        on_error => sub {
+            my ($self) = @_;
+            warn "ERROR";
+            return $self->redirect( '/app/404.html' );
+        },
+        providers => $config->{oauth};
+           
     foreach ( @{$rules} ) {
         mount $_->{path} => $app;    
     }
+    
     $app;
 };

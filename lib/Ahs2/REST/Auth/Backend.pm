@@ -81,6 +81,67 @@ sub login {
     return $res;
 }
 
+sub login_via_provider {
+    my ( $self, $param ) = @_;
+
+    my $config  = $self->get_config;
+    my $session = $self->get_session();
+    my $res;
+	if ( $session->{user}) {
+		$res = { location => '/app/index.html'  };
+	}
+	else {
+		my $user = $self->get_model()->resultset('User')->find_or_create(
+			{
+				'me.email'       => $param->{email}
+			},
+		);
+		if ( $user ) {
+			$user->actions('[]');
+			$user->updated(time);
+			$user->created(time);
+			$user->login($param->{username});
+			$user->fname($param->{first_name});
+			$user->lname($param->{first_name});
+			$user->update();
+			
+			# get ACL user data
+			$res->{acl} = $self->_get_acl_data($user);
+			# create token with TTL
+			# set ACL user data to response
+			$res->{token} = $self->_uniqid();
+			
+			# save ACL user data to fast_storage with token
+			$param->{ttl} ||= $self->default->{ttl};
+			$self->get_session->{acl} 	= $res->{acl}->{page};
+			$self->get_session->{rest} 	= $res->{acl}->{rest};
+			
+			my $user = {
+				id => $user->get_column('id'),
+				email => $user->get_column('email'),
+				login => $user->get_column('login'),
+				fname => $user->get_column('fname'),
+				lname => $user->get_column('lname'),
+				mname => $user->get_column('mname'),
+                loginStatus => 1
+			};
+			
+			$self->get_session->{user} 	= $user;
+			
+			my $default_page = $res->{acl}->{page}->[0];
+			
+			$self->get_session->{active_page} = $default_page->{name};
+			if ( $default_page->{children} ) {
+				$self->get_session->{active_subpage} = $default_page->{children}->[0]->{name};	
+			}
+						
+			$res = { location => '/app/index.html'  };
+		} # END if ( $user[0] )
+	}
+    
+    return $res;
+}
+
 sub isauth {
     my ( $self, $param ) = @_;
 
