@@ -1,7 +1,7 @@
 <nav ng-controller="DropdownCtrl">
 	<ul class="nav pills" ng-switch="model.loginStatus">
 		<li class="dropdown" ng-switch-when="1" >
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" ng-click="$event.preventDefault()">
 				{{model.login}}
 				<b class="caret"></b>
 			</a>

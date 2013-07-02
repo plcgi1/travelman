@@ -41,6 +41,10 @@ app
               templateUrl: 'views/settings.html',
               controller: 'SettingsCtrl'
             })
+            .when('/settings/:mode', {
+              templateUrl: 'views/settings.html',
+              controller: 'SettingsCtrl'
+            })
             .otherwise({
               redirectTo: '/'
             });

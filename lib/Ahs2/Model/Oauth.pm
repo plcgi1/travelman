@@ -9,6 +9,8 @@ sub login {
 	my($self,$user_data,$provider) = @_;
 	
 	my $backend = Ahs2::REST::Auth::Backend->new({ model => $self->model,config=>$self->config,session => $self->session});
+	$user_data->{provider} = $provider;
+	
 	my $res = $backend->login_via_provider($user_data);
 	
 	return $res;

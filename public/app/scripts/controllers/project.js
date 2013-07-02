@@ -24,7 +24,7 @@ app.controllers
         }
         
         $scope.dateOptions = { format: 'yyyy-mm-dd' };
-        
+       
         $scope.setMode = function(mode){
             $scope.mode = mode;
             $scope.canProjectSaved = false;
@@ -47,12 +47,14 @@ app.controllers
         });
         
         //setTimeout(function(){
-            $scope.setMode($routeParams.mode);
-            if (!$scope.project) {
-                init();
-            }
+        $scope.setMode($routeParams.mode);
+        
+        if (!$scope.project) {
+            init();
+        }
             
-        //},0);        
+        //},0);
+        
     }
 );
 })();

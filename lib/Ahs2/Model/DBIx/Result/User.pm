@@ -118,6 +118,13 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "mname",
   { data_type => "varchar", is_nullable => 1, size => 255 },
+  
+  "from_provider",
+  { data_type => "varchar", is_nullable => 1, size => 255 },
+  "confirm_hash",
+  { data_type => "varchar", is_nullable => 1, size => 255 },
+  "email_confirmed",
+  { data_type => "bigint", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -143,10 +150,10 @@ Related object: L<Ahs2::Model::DBIx::Result::PassportData>
 =cut
 
 __PACKAGE__->has_many(
-  "passport_datas",
-  "Ahs2::Model::DBIx::Result::PassportData",
+  "user_info",
+  "Ahs2::Model::DBIx::Result::UserInfo",
   { "foreign.user_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
+  { cascade_copy => 1, cascade_delete => 1},
 );
 
 __PACKAGE__->has_many(

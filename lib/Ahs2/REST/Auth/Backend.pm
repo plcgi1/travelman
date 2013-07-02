@@ -56,13 +56,14 @@ sub login {
 			$self->get_session->{rest} 	= $res->{acl}->{rest};
 			
 			my $user = {
-				id => $user[0]->get_column('id'),
-				email => $user[0]->get_column('email'),
-				login => $user[0]->get_column('login'),
-				fname => $user[0]->get_column('fname'),
-				lname => $user[0]->get_column('lname'),
-				mname => $user[0]->get_column('mname'),
-                loginStatus => 1
+				id 				=> $user[0]->get_column('id'),
+				email 			=> $user[0]->get_column('email'),
+				login 			=> $user[0]->get_column('login'),
+				fname 			=> $user[0]->get_column('fname'),
+				lname 			=> $user[0]->get_column('lname'),
+				mname 			=> $user[0]->get_column('mname'),
+				email_confirmed => $user[0]->get_column('email_confirmed'),
+                loginStatus 	=> 1
 			};
 			
 			$self->get_session->{user} 	= $user;
@@ -97,14 +98,15 @@ sub login_via_provider {
 			},
 		);
 		if ( $user ) {
-			$user->actions('[]');
+			$user->actions('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]');
 			$user->updated(time);
-			$user->created(time);
 			$user->login($param->{username});
 			$user->fname($param->{first_name});
 			$user->lname($param->{first_name});
+			$user->from_provider($param->{provider});
 			$user->update();
 			
+			$user->user_info->find_or_create({user_id => $user->id });
 			# get ACL user data
 			$res->{acl} = $self->_get_acl_data($user);
 			# create token with TTL
@@ -123,6 +125,7 @@ sub login_via_provider {
 				fname => $user->get_column('fname'),
 				lname => $user->get_column('lname'),
 				mname => $user->get_column('mname'),
+				email_confirmed => $user->get_column('email_confirmed'),
                 loginStatus => 1
 			};
 			
