@@ -17,6 +17,7 @@ WriteMakefile(
 		'Plack::Middleware::Static' => '0',
 		'Plack::Middleware::AccessLog' => '0',
 		'Plack::Middleware::ContentMD5' => '0',
+		'Plack::Middleware::OAuth' => '0',
 		
 		'JavaScript::Value::Escape' => '0',
 		'Carp' => '0',
