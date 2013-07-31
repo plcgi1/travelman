@@ -4,6 +4,7 @@ use Log::Log4perl;
 use File::Basename;
 use lib dirname(__FILE__).'/woa-toolkit-core/lib';
 use lib dirname(__FILE__).'/woa-toolkit-plack/lib';
+use lib dirname(__FILE__).'/../lib';
 use Plack::Builder;
 #use Plack::Middleware::OAuth::UserInfo;
 use Plack::Middleware::WOAx::App;
