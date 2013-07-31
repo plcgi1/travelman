@@ -5,7 +5,7 @@ use File::Basename;
 use lib dirname(__FILE__).'/woa-toolkit-core/lib';
 use lib dirname(__FILE__).'/woa-toolkit-plack/lib';
 use Plack::Builder;
-use Plack::Middleware::OAuth::UserInfo;
+#use Plack::Middleware::OAuth::UserInfo;
 use Plack::Middleware::WOAx::App;
 
 use WOA::Config::Provider;
@@ -95,31 +95,30 @@ builder {
     # from $env->{'psgix.logger'}
     enable "Log4perl", category => "main";    
     
-    enable "OAuth",
-        on_success => sub {
-            my ($self,$token) = @_;
-            my $env = $self->env;
-        
-            my $config = $self->config;   # provider config
-            
-            my $userinfo = Plack::Middleware::OAuth::UserInfo->new( 
-                token =>  $token , 
-                config => $config
-            );
-            my $info_hash = $userinfo->ask( $self->{provider} );   # load Plack::Middleware::OAuth::UserInfo::Twitter
-            my $auth = Ahs2::Model::Oauth->new({ model => $model, config => $config, session => $self->{env}->{'psgix.session'} });
-            use Data::Dumper;
-            warn Dumper $info_hash;
-            my $res = $auth->login($info_hash,$self->{provider});
-            
-            return $self->redirect( $res->{location} );
-        },
-        on_error => sub {
-            my ($self) = @_;
-            warn "ERROR";
-            return $self->redirect( '/app/404.html' );
-        },
-        providers => $config->{oauth};
+    #enable "OAuth",
+    #    on_success => sub {
+    #        my ($self,$token) = @_;
+    #        my $env = $self->env;
+    #    
+    #        my $config = $self->config;   # provider config
+    #        
+    #        my $userinfo = Plack::Middleware::OAuth::UserInfo->new( 
+    #            token =>  $token , 
+    #            config => $config
+    #        );
+    #        my $info_hash = $userinfo->ask( $self->{provider} );   # load Plack::Middleware::OAuth::UserInfo::Twitter
+    #        my $auth = Ahs2::Model::Oauth->new({ model => $model, config => $config, session => $self->{env}->{'psgix.session'} });
+    #        
+    #        my $res = $auth->login($info_hash,$self->{provider});
+    #        
+    #        return $self->redirect( $res->{location} );
+    #    },
+    #    on_error => sub {
+    #        my ($self) = @_;
+    #        warn "ERROR";
+    #        return $self->redirect( '/app/404.html' );
+    #    },
+    #    providers => $config->{oauth};
            
     foreach ( @{$rules} ) {
         mount $_->{path} => $app;    
