@@ -1,0 +1,6 @@
+[submodule "woa-toolkit-core"]
+	path = woa-toolkit-core
+	url = https://github.com/plcgi1/woa-toolkit-core
+[submodule "woa-toolkit-plack"]
+	path = woa-toolkit-plack
+	url = https://github.com/plcgi1/woa-toolkit-plack
