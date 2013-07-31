@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+perl_version('5.14');
 WriteMakefile(
     NAME      => 'ahs',
     VERSION   => '0.01',
