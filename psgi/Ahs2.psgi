@@ -1,6 +1,11 @@
 use common::sense;
 use Log::Log4perl;
 use File::Basename;
+
+use lib dirname(__FILE__).'/woa-toolkit-core/lib';
+use lib dirname(__FILE__).'/woa-toolkit-plack/lib';
+use lib dirname(__FILE__).'/lib';
+
 use Plack::Builder;
 use Plack::Middleware::OAuth::UserInfo;
 use Plack::Middleware::WOAx::App;
@@ -31,6 +36,8 @@ use Ahs2::Model::Oauth;
 my $app_root    = dirname(__FILE__).'/../';
 
 my $config = WOA::Config::Provider->get_config($app_root.'/etc/Ahs2.conf');
+#$config->{app_root} = $app_root;
+
 my $tpl = Text::Xslate->new(
     path        => $config->{template_root},
     #cache_dir  => $config->{template_cache},
