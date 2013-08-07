@@ -1,3 +1,5 @@
+(function(){
+	'use strict';
 // <navbar position="" model=""/>
 var app = window.app;
 app.directives
@@ -24,3 +26,4 @@ app.directives
         }
     };
 });
+})();

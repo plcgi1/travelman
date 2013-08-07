@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 var app = window.app;
 app.services
@@ -7,3 +8,4 @@ app.services
 		}
 	);
 });
+})();

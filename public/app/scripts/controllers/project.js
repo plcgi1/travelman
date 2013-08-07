@@ -44,6 +44,7 @@ app.controllers
         
         $scope.$on('userDataLoaded',function(scope,data){
             $rootScope.loginStatus = data.loginStatus;
+            console.log(data);
         });
         
         //setTimeout(function(){

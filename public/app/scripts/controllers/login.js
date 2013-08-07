@@ -1,34 +1,39 @@
+(function(){
 'use strict';
 var app = window.app;
-app.controller('AuthCtrl', function ($scope,$http,$routeParams,$rootScope,EventBus) {
+app.controller('AuthCtrl', function ($scope,$http,$routeParams,$rootScope,EventBus,Auth) {
 	
 	$scope.logme = function(){
 		$scope.authenticating = 1;
 		$scope.showErrorMessage = false;
-		$http.post('/ahs/auth',{ login:$scope.login, password: $scope.password })
-			.success(function(data, status, headers, config){
-				location.href = data.location;
-				$scope.authenticating = false;
-			})
-			.error(function(data, status, headers, config){
+		function success(data){
+			location.href = data.location;
+			$scope.authenticating = false;
+		}
+		function error(){
 				$scope.authenticating = false;
 				$scope.showErrorMessage = true;
 				$scope.errorMessage = 'Server errrrr';
 				return false;
-			})
+			}
+		$http.post('/ahs/auth',{ login:$scope.login, password: $scope.password })
+			.success(success)
+			.error(error);
 			return false;
 	};
 	$scope.logout = function(){
-		$http.delete('/ahs/auth',{})
-			.success(function(data, status, headers, config){
+		Auth.logout(
+			{},
+			function(){
 				EventBus.prepForBroadcast('userDataLoaded','user',{loginStatus:0});
 				location.reload();
-			})
-			.error(function(data, status, headers, config){
-				console.log(data);
+			},
+			function () {
 				$scope.errorMessage = 'Server errrrr';
 				return false;
-			})
-			return false;
+			}
+		);
 	};
+	
 });
+})();

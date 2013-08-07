@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 //angular.module('ahsServices', ['ngResource'])
 var app = window.app;
@@ -9,3 +10,4 @@ app.services
 		}
 	);
 });
+})();

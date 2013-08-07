@@ -1,3 +1,5 @@
+(function(){
+	'use strict';
 var app = window.app;
 app.directives.directive('enterSubmit', function ($parse) {
     return {
@@ -20,7 +22,7 @@ app.directives.directive('enterSubmit', function ($parse) {
 		}
     };
 });
-
+})();
 //app.directive('ngBlur',function($parse){
 //	return function(scope,element,attrs){
 //		var ngFocusGet = $parse(attrs.ngBlur);

@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 var app = window.app;
 angular.module('AhsApp')
@@ -5,3 +6,4 @@ angular.module('AhsApp')
     
     }
 );
+})();

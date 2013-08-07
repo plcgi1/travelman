@@ -3,11 +3,12 @@
 <script type="text/html" id="geoplaceData">
 <section ng-switch="mode" class="span3 pull-right" ng-model="markers" style="position:relative;margin-right:10px;">
 	<div ng-switch-when="view">
+	
 		<ul class="nav">
 			<li ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item,this)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 				Название: {{item.marker.getTitle()}}<br/>
-				Ш: {{item.marker.getPosition().jb}}<br/>
-				Д: {{item.marker.getPosition().kb}}
+				Ш: {{item.marker.getPosition().lb}}<br/>
+				Д: {{item.marker.getPosition().mb}}
 			</li>
 		</ul>
 	</div>
@@ -17,8 +18,8 @@
 		<div ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 			<button type="button" class="close" data-dismiss="alert" ng-click="removeMarker(item)">&times;</button>
 			<!--<div class="" ng-model="item.marker.getTitle()">Название: {{item.marker.getTitle()}}</div>-->
-			<div class="" ng-bind="item.marker.getPosition().jb">Ш: {{item.marker.getPosition().jb}}</div>
-			<div class="" ng-bind="item.marker.getPosition().kb">Д: {{item.marker.getPosition().kb}}</div>			
+			<div class="" ng-bind="item.marker.getPosition().lb">Ш: {{item.marker.getPosition().lb}}</div>
+			<div class="" ng-bind="item.marker.getPosition().mb">Д: {{item.marker.getPosition().mb}}</div>			
 		</div>
 	</div>
 </section>

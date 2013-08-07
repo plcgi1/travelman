@@ -4,9 +4,10 @@ use FindBin qw/$Bin/;
 use Getopt::Long;
 use Pod::Usage;
 use File::Basename;
-use  WOA::Config::Provider;
+use Data::Dumper;
+use Path::Class;
 
-#my $app_root    = dirname(__FILE__).'/../';
+my $app_root    = $Bin.'/..';
 
 my ($help);
 
@@ -16,164 +17,95 @@ GetOptions(
 
 pod2usage(1) if $help;
 
-my $app_root    = $Bin.'/..';
+#my $app_root    = $Bin.'/..';
 
-my $app_config = WOA::Config::Provider->get_config($app_root.'/etc/Reports.conf');
+my $config = get_config($app_root);
 
-my $controller = $ARGV[0];
-my $config = get_config();
-
-my $data = $config->{path}->{$controller};
-if ( $data ){
-    process($data,$config);
-}
+process($config);
 
 exit(0);
 
 sub process {
-    my ($data,$config) = @_;
+    my ($config) = @_;
     my @command = ($config->{compiler});
-	my $min_js_root = $app_root.$config->{js_root}.'/js/min';
-	my $dev_js_root = $app_root.$config->{js_root};
-    foreach ( @{$data->{js}} ){
-        push @command,'--js '.$dev_js_root.$_;
-    }
-    push @command,' --module '.$data->{mname}.':'.int(@{$data->{js}});
-    my $command = join ' ',@command;
-    print "\n$command\n";
-    chdir $min_js_root;
-    system $command;
+	my $min_js_root = $config->{min_js_root};
+	my (@str,$str);
+	#print $config->{app_root}.'/index.html';
+	
+	open F,$config->{app_root}.'/index.html' || die "Cant open file ".$config->{app_root}.'/index.html - '.$!;
+	while (<F>) {
+		push @str,$_;
+	}
+	close F;
+	$str = join '',@str;
+	my $block;
+	$str =~s/\n//g;
+	$str =~m/<!-- build:js -->(.*)<!-- endbuild -->/gi;
+	$str = $1;
+	
+	$str =~s/<!--(.*)-->//g;
+	$str =~s/<\/script>/<\/script>\n/g;
+	@str = split "\n",$str;
+	
+	my @scr;
+	foreach ( @str ) {
+		my $l = $_;
+		$l=~s/\s+/g/;
+		next unless $l=~/script/;
+		$l =~m/src="(.*)"/;
+		$l = $config->{app_root}.'/'.$1;
+		push @scr,$l;
+	}
+	my $concated = concat(@scr);
+	unless ( -d $config->{min_js_root} ) {
+		mkdir $config->{min_js_root};
+	}
+	
+	open(F, ">$config->{min_js_root}/app.js") or die "$!";
+	print F $concated;
+	close F;
+	#print $concated;
+	
+	push @command,'--js '.$config->{min_js_root}.'/app.js';	
+	push @command,' --module '.$config->{app_name}.':1';
+		
+	chdir $config->{min_js_root};
+	my $command = join ' ',@command;
+	print "\n$command\n";
+	system $command;
 }
 
 sub get_config {
+	my ($app_root) = @_;
     return {
         compiler    => 'java -jar /home/harper/soft/bin/compiler.jar',
-        js_root     => '/public',
-        path        => {
-			'auth' => {
-				js => [
-					"/js/libs/underscore.js",
-					"/js/libs/jquery.preloader.js",
-					"/js/libs/bootstrap/bootstrap-dropdown.js",
-					"/js/libs/mustache.js",
-					"/js/libs/backbone.js",
-					"/js/app/app.js",
-					"/js/app/auth/main.js"
-				],
-				mname => 'auth'
-			},
-			'tasks' => {
-                js      =>  [
-					"/js/libs/bootstrap/bootstrap-dropdown.js",
-					"/js/libs/bootstrap/bootstrap-tooltip.js",
-					"/js/libs/jquery.jgrowl.js",
-					"/js/libs/jquery.cookie.js",
-					"/js/libs/jquery.timepicker.js",
-					"/js/libs/datetime.js",
-							
-					"/js/libs/jquery.ui.core.js",
-					"/js/libs/jquery.ui.widget.js",
-					"/js/libs/jquery.ui.position.js",
-					"/js/libs/jquery.ui.dialog.js",
-					"/js/libs/jquery.ui.mouse.js",
-					"/js/libs/jquery.ui.sortable.js",
-					"/js/libs/jquery.ui.draggable.js",
-					"/js/libs/jquery.ui.droppable.js",
-					"/js/libs/jquery.ui.progressbar.js",
-					"/js/libs/jquery.ui.datepicker.js",
-					"/js/libs/mustache.js",
-					"/js/libs/jquery.formParser.js",
-			
-					"/js/libs/mColorPicker.js",
-					"/js/libs/underscore.js",
-					"/js/libs/backbone.js",
-					"/js/libs/jqgrid/i18n/grid.locale-ru.js",
-					"/js/libs/jqgrid/base.js",
-					"/js/libs/jqgrid/backbone.js",
-					
-					"/js/libs/bootstrap/bootstrap-timeline.js",
-					
-					"/js/app/app.js" ,
-					"/js/libs/errorvis.js",
-					"/js/app/auth/main.js",
-					"/js/app/tasks/main.js",
-					"/js/app/tasks/toggle-pane.js",
-					"/js/app/tasks/warning.js",
-					"/js/app/tasks/worktime.js",                        
-					"/js/app/tasks/timers.js",        
-					"/js/app/tasks/users.js",
-					"/js/app/tasks/tasks.js",
-					"/js/app/tasks/kanban.js",    
-					"/js/app/tasks/filter.js"
-					,"/js/app/tasks/timeline.js"
-                ],
-                mname   =>  'tasks'
-            },
-			'task' => {
-				js => [
-					"/js/libs/bootstrap/bootstrap-dropdown.js",
-					"/js/libs/jquery.jgrowl.js",
-					
-					"/js/libs/datetime.js",
-					"/js/libs/jquery.timepicker.js",
-					"/js/libs/jquery.ui.core.js",
-					"/js/libs/jquery.ui.widget.js",
-					"/js/libs/jquery.ui.position.js",
-					"/js/libs/jquery.ui.dialog.js",
-					"/js/libs/jquery.ui.mouse.js",
-					"/js/libs/jquery.ui.sortable.js",
-					"/js/libs/jquery.ui.draggable.js",
-					"/js/libs/jquery.ui.droppable.js",
-					"/js/libs/jquery.ui.progressbar.js",
-					"/js/libs/jquery.ui.datepicker.js",
-					"/js/libs/mustache.js",
-					"/js/libs/validator.js",
-					"/js/libs/jquery.formParser.js",
-					"/js/libs/jquery.preloader.js",
-					"/js/libs/underscore.js",
-					"/js/libs/backbone.js",
-					
-					"/js/app/app.js" ,
-					"/js/libs/errorvis.js",
-					"/js/validator/Task.js",
-					"/js/app/auth/main.js",
-					"/js/app/task/main.js",
-					"/js/app/task/task.js"
-				],
-				mname => 'task'
-			},
-			calendar => {
-				js => [
-					"/js/libs/bootstrap/bootstrap-dropdown.js",
-					"/js/libs/jquery.jgrowl.js",
-					"/js/libs/datetime.js",
-					"/js/libs/jquery.timepicker.js",
-					"/js/libs/jquery.ui.core.js",
-					"/js/libs/jquery.ui.widget.js",
-					"/js/libs/jquery.ui.position.js",
-					"/js/libs/jquery.ui.dialog.js",
-					"/js/libs/jquery.ui.mouse.js",
-					"/js/libs/jquery.ui.sortable.js",
-					"/js/libs/jquery.ui.draggable.js",
-					"/js/libs/jquery.ui.droppable.js",
-					"/js/libs/jquery.ui.progressbar.js",
-					"/js/libs/fullcalendar.js",
-					"/js/libs/mustache.js",
-					"/js/libs/validator.js",
-					"/js/libs/jquery.formParser.js",
-					"/js/libs/jquery.preloader.js",
-					"/js/libs/underscore.js",
-					"/js/libs/backbone.js",
-					
-					"/js/app/app.js" ,
-					"/js/app/auth/main.js",
-					"/js/app/calendar/main.js"
-				],
-				mname => 'calendar'
-			}
-		},
+        app_root     => $app_root.'/public/app',
+		min_js_root => $app_root.'/public/app/build',
+        app_name    => 'ahs',
     };
 }
+
+sub concat {
+	my ( @files) = @_;
+		
+	my @arr;
+	for my $f (@files) {
+		my $file_name = (split '/',$f)[-1];
+		my $base = $f;
+		$base =~s/\/$file_name$//;
+		$base = dir($base);
+		my $file = $base->file($file_name);
+		next unless -e $file;
+
+		$file->resolve;
+		#next unless $base->contains($file);
+
+		push @arr,$file->slurp;
+	}
+	my $concat = join "\n",@arr;
+	return $concat;
+}
+
 
 1;
 

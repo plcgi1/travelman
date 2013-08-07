@@ -1,3 +1,4 @@
+;(function(){
 'use strict';
 window.app = angular.module('AhsApp', [
   'plcgi.navbar','plcgi.list','plcgi.dropdown','plcgi.mode',
@@ -25,7 +26,6 @@ app
               controller: 'AuthCtrl',
               templateUrl: 'views/login-page.html'
             })
-            
             .when('/projects', {
               templateUrl: 'views/projects.html'
             })
@@ -48,30 +48,34 @@ app
             .otherwise({
               redirectTo: '/'
             });
-            var interceptor = ['$rootScope', '$q', 'appLoading', function (scope, $q,appLoading) {
+            var interceptor = [
+                '$rootScope',
+                '$q',
+                'appLoading',
+                function (scope, $q,appLoading) {
                 
-                function success(response) {
-                    appLoading.ready();
-                    //console.log(response);
-                    return response;
-                }
-        
-                function error(response) {
-                    var status = response.status;
-        
-                    if (status == 401) {
-                        window.location = "./401.html";
-                        return;
+                    function success(response) {
+                        appLoading.ready();
+                        //console.log(response);
+                        return response;
                     }
-                    // otherwise
-                    appLoading.ready();
-                    return $q.reject(response);
+            
+                    function error(response) {
+                        var status = response.status;
+            
+                        if (status === 401) {
+                            window.location = './401.html';
+                            return;
+                        }
+                        // otherwise
+                        appLoading.ready();
+                        return $q.reject(response);
+                    }
+                    return function (promise) {
+                        appLoading.loading();
+                        return promise.then(success, error);
+                    };
                 }
-                return function (promise) {
-                    appLoading.loading();
-                    return promise.then(success, error);
-                }
-            }
             ];
             $httpProvider.responseInterceptors.push(interceptor);
     })
@@ -81,18 +85,20 @@ app
             loading : function() {
                 clearTimeout(timer);
                 $rootScope.status = 'loading';
-                if(!$rootScope.$$phase)
+                if(!$rootScope.$$phase) {
                     $rootScope.$apply();
+                }
             },
             ready : function(delay) {
                 function ready() {
                     $rootScope.status = 'ready';
-                    if(!$rootScope.$$phase)
+                    if(!$rootScope.$$phase) {
                         $rootScope.$apply();
+                    }
                 }
     
                 clearTimeout(timer);
-                delay = delay == null ? 500 : false;
+                delay = delay === null ? 500 : false;
                 if(delay) {
                     timer = setTimeout(ready, delay);
                 }
@@ -103,3 +109,4 @@ app
         };
     }
 );
+})();
