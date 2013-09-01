@@ -21,11 +21,15 @@ my $rules = [
     
     { path => '/ahs/projects/project/participants$', class => 'Ahs2::REST::ProjectParticipants::SP' },
     
-    { path => '/ahs/settings$', class => 'Ahs2::REST::Settings::SP' },
+    { path => '/ahs/settings/mydata$', class => 'Ahs2::REST::Settings::SP' },
     
-    { path => '/ahs/settings/myphoto', class => 'Ahs2::REST::MyPhoto::SP' },
+    { path => '/ahs/settings/myquality$', class => 'Ahs2::REST::MyQuality::SP' },
+    
+    { path => '/ahs/settings/myphoto$', class => 'Ahs2::REST::MyPhoto::SP' },
     
     { path => '/ahs/projects/project/info$', class => 'Ahs2::REST::ProjectInfo::SP' },
+    
+    { path => '/ahs/settings/password$', class => 'Ahs2::REST::MyPassword::SP' },
     
 ];
 

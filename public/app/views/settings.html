@@ -14,7 +14,16 @@
 	  </div>
 	  <div id="fio" class="accordion-body collapse in">
 		<div class="accordion-inner">
-			
+			<label>
+			  <span ng-bind="mydata.fname"></span>&nbsp;
+			  <span ng-bind="mydata.mname"></span>&nbsp;
+			  <span ng-bind="mydata.lname"></span>
+			</label>
+			<span ng-show="mode=='edit'">
+			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.fname" />
+			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.mname"/>
+			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.lname"/>
+			</span>
 		</div>
 	  </div>
 	</div>
@@ -29,7 +38,6 @@
 		<div class="accordion-inner">
 			<span class="span3">
 				<img ng-src="{{myphoto.path}}" alt="" width="100" height="100" class="img-circle"/>
-				<div>{{myphoto.filename}}</div>
 			</span>
 			<span class="span3 pull-right" ng-show="mode=='edit'">
 				<upload target="/ahs/settings/myphoto"></upload>
@@ -37,43 +45,36 @@
 		</div>
 	  </div>
 	</div>
-	<!--div class="accordion-group" ng-show="project.id!='new'">
+	<div class="accordion-group" >
 	  <div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#passport">
-		  Паспортные данные
-		</a>
+		  <h4>Квалификационные данные</h4>
 	  </div>
-	  <div id="passport" class="accordion-body collapse in">
+	  <div id="quality" class="accordion-body collapse in">
 		<div class="accordion-inner">
-		  <upload ng-model="settings.passport" mode="view"></upload>
+		  	<span class="" >
+				<uploads target="/ahs/settings/myquality" name="myquality" uploadns="myqualityUploaded" model="myquality"></uploads>
+			</span>		
 		</div>
 	  </div>
 	</div>
-	<div class="accordion-group" >
+	<div class="accordion-group" ng-show="mode=='edit'">
 	  <div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#quality">
-		  Квалификационные данные
-		</a>
+		  <h4>Смена пароля</h4>
 	  </div>
-	  <div id="quality" class="accordion-body collapse">
+	  <div id="quality" class="accordion-body collapse in">
 		<div class="accordion-inner">
-		  <upload ng-model="settings.quality" mode="view"></upload>
+		  <label>
+			  Пароль
+			</label>
+			<input type="password" ng-model="mypassword.1"/>
+			<label>
+			  Повторите пароль
+			</label>
+			<input type="password" ng-model="mypassword.2"/>
+			<br/>
+			<input type="button" ng-click="save_password()" value="Сохранить">
 		</div>
 	  </div>
-	</div>-->
-	<div class="accordion-group">
-	  <div class="accordion-heading" ng-click="$event.preventDefault()">
-		<h4>
-		  О себе
-		</h4>
-	  </div>
-	  <div id="about" class="accordion-body collapse in">
-		<div class="accordion-inner">
-		  <textarea ng-model="settings.about" class="span6" rows="5">
-			
-		  </textarea>
-		</div>
-	  </div>
-	</div>	
+	</div>
   </div>
 </div>

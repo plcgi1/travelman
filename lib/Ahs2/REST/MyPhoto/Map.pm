@@ -4,7 +4,7 @@ use strict;
 my $map = [
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/settings/myphoto',
+        regexp    => '/ahs/settings/myphoto$',
         # func name in Backend module
         func_name => 'save',
         # unique name for service - used in javascript validator rules
@@ -30,7 +30,7 @@ my $map = [
     },
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/settings/myphoto',
+        regexp    => '/ahs/settings/myphoto$',
         # func name in Backend module
         func_name => 'get',
         # unique name for service - used in javascript validator rules
@@ -56,7 +56,7 @@ my $map = [
     },
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/settings/myphoto',
+        regexp    => '/ahs/settings/myphoto$',
         # func name in Backend module
         func_name => 'remove',
         # unique name for service - used in javascript validator rules

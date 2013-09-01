@@ -1,10 +1,6 @@
-package Ahs2::REST::MyPhoto::Engine;
+package Ahs2::REST::MyQuality::Engine;
 use strict;
 use Data::Dumper;
-use JSON::XS;
-use URI::Escape qw/uri_unescape/;
-use IO::File;
-use WOA::Validator::ErrorCode;
 use parent 'Ahs2::Component::Upload::Engine';
 
 

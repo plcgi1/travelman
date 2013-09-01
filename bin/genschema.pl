@@ -18,7 +18,7 @@ GetOptions(
 pod2usage(1) if $help;
 
 my $wcp = WOA::Config::Provider->new();
-my $config = $wcp->get_config($Bin.'/../etc/Ahs.conf');
+my $config = $wcp->get_config($Bin.'/../etc/Ahs2.conf');
 
 make_schema_at(
     "Ahs::Model::DBIx",

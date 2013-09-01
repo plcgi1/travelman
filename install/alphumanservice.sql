@@ -68,7 +68,9 @@ INSERT INTO `action` VALUES (1,'NEW_PROJECT','Новый проект','/part-fo
 	(19,'REST_PARTICIPANTS','Участники проекта','/ahs/participants','[\"GET\"]',1361220725,1361220725,'rest',0,NULL,0,104,'hidden'),
 	(20,'MY_MEDIA','Изображение','/settings/media','[\"GET\"]',1361461049,1361461049,'page',0,14,0,104,'show'),
 	(21,'REST_MY_MEDIA','','/ahs/settings/media','[\"GET\",\"POST\",\"DELETE\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL),
-	(22,'REST_CONFIRM','','/ahs/part-form/confirm','[\"GET\",\"POST\",\"DELETE\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL);
+	(22,'REST_CONFIRM','','/ahs/part-form/confirm','[\"GET\",\"POST\",\"DELETE\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL),
+	(23,'REST_MYDATA','','/ahs/settings/mydata','[\"GET\",\"POST\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL),
+	(24,'REST_MYPASSWORD','','/ahs/settings/password','[\"POST\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 

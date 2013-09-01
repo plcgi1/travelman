@@ -32,6 +32,13 @@ sub save {
         unless ( -d $out_dir ) {
             mkdir $out_dir;
         }
+        
+        opendir D, $out_dir;
+        my @files = readdir D;
+        closedir D;
+        foreach (@files) {
+            unlink $out_dir.'/'.$_;
+        }
         open F, $tempname || die "Cant open file ".$param->{file}->tempname." - '$!'";
         open OUT,">$out_file";
         while ( my $line = <F> ) {
@@ -41,7 +48,7 @@ sub save {
         close F;
         #$rs->content(join '',@arr);
         
-        $rs->filename($param->{file}->filename);
+        $rs->filename($filename);
         $rs->content_type($param->{file}->content_type);
         $rs->size($param->{file}->size);
         $rs->update();

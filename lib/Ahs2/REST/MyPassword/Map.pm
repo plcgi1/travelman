@@ -1,49 +1,24 @@
-package Ahs2::REST::Settings::Map;
+package Ahs2::REST::MyPassword::Map;
 use strict;
 
 my $map = [
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/settings/mydata$',
-        # func name in Backend module
-        func_name => 'get',
-        # unique name for service - used in javascript validator rules
-        name      => 'SETTINGS_GET',
-        
-        in        => {
-            skip_from_uri => 1,
-            param         => [
-                # some patterns to define field names and validation rules
-                # all rule names - in WOA::Validator::Rules::Base
-				#{ name => 'id',         rules => [ {rule => 'pattern', param => '^(\d+|new)$' } ], error => "Bad id" },
-            ]
-        },
-        # service output description
-        out			=>	{
-            mime_type => 'text/javascript',
-            # methods from View - you can implement your own
-            view_method => 'as_json'
-        },
-        
-        # maybe POST GET PUT DELETE
-        req_method => 'GET'
-    },
-	{
-        # regexp or absolute value for url to service
-        regexp    => '/ahs/settings/mydata$',
+        regexp    => '/ahs/settings/password$',
         # func name in Backend module
         func_name => 'save',
         # unique name for service - used in javascript validator rules
-        name      => 'SETTINGS_SAVE',
+        name      => 'PASSWORD_SAVE',
         
         in        => {
             skip_from_uri => 1,
             param         => [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
-				{ name => 'fname',         rules => [ {rule => 'anyText' } ], error => "Bad fname" },
-				{ name => 'lname',         rules => [ {rule => 'anyText' } ], error => "Bad lname" },
-				{ name => 'mname',         rules => [ {rule => 'anyText' } ], error => "Bad mname" },
+                
+				{ name => 'password',      rules => [ {rule => 'anyText'} ], required => 1, error => "Bad password" },
+				{ name => 'password2',      rules => [ {rule => 'anyText'} ], required => 1, error => "Bad password2" },
+               
             ]
         },
         # service output description
@@ -65,7 +40,7 @@ sub get_map { return $map; }
 __END__
 
 
-=head1 REST::Ahs2::REST::Settings::Map - [TODO]
+=head1 REST::Ahs2::REST::MyPassword::Map - [TODO]
 
 =head2 SYNOPSIS
 

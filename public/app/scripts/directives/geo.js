@@ -104,7 +104,6 @@
 				}
 
 				function placeMarkers(markers) {
-
 					for (var i = 0; i < markers.length; i++) {
 						var location = new google.maps.LatLng(markers[i].lattitude, markers[i].longtitude, $scope.map);
 
@@ -143,6 +142,7 @@
 
 				function unmarkMarker(marker) {
 					marker.marker.setAnimation(null);
+					
 				}
 
 				function saveGeo() {
