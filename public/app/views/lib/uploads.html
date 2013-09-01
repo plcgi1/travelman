@@ -1,0 +1,25 @@
+<!--
+<uploads model=MODEL-NAME template=PATH-TO-TEMPLATE service_url=URL-TO-SERVICE/>
+-->
+<style>
+	
+</style>
+	<ul class="nav nav-tabs nav-stacked">
+		<li ng-repeat="item in model" class="alert alert-info">
+			<span>
+			<a href="{{item.path}}" target="_blank" class="upload-item">
+				{{item.original_name}}
+			</a>
+			<button ng-show="mode=='edit'" type="button" class="close pull-right upload-close" data-dismiss="alert" ng-click="removeUpload(item)">&times;</button>
+			</span>
+		</li>
+	</ul>
+	<div ng-show="mode=='edit'">
+		<div class="span12 upload-row">
+			<label class="span4 upload">
+				<input type="file" upload-name="{{my_name}}" accept="images" class="user-file" multiple size="1">
+			</label>
+			<button class="upload-save button" ng-click="upload()">Загрузить</button>		
+			<br/><br/><progress min="0" max="100" value="0" class="progressbar upload-progress"></progress>			
+		</div>				
+	</div>

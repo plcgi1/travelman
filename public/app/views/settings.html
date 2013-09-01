@@ -51,6 +51,15 @@
 	  </div>
 	  <div id="quality" class="accordion-body collapse in">
 		<div class="accordion-inner">
+			<h5>Моя квалификация</h5>
+			<label ng-show="mode=='view'">
+			  <span ng-bind="mydata.quality"></span>
+			</label>
+			
+			<span ng-show="mode=='edit'">
+			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.quality"/>
+			</span>
+			<h5>Сканы моих квалификационных документов</h5>
 		  	<span class="" >
 				<uploads target="/ahs/settings/myquality" name="myquality" uploadns="myqualityUploaded" model="myquality"></uploads>
 			</span>		

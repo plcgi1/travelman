@@ -16,7 +16,7 @@ sub save {
         { id => $session->{user}->{id} },
     )->single();
     my $is_edit;
-    foreach (qw/fname lname mname/) {
+    foreach (qw/fname lname mname quality/) {
         if ($param->{$_}) {
             $user_info->$_($param->{$_});
             $is_edit++;
@@ -39,8 +39,8 @@ sub get {
         { user_id => $session->{user}->{id} },
         {
             join => [qw/user/],
-            select => [qw/me.content_type me.size me.filename user.fname user.mname user.lname/],
-            as => [qw/content_type size filename fname mname lname/]
+            select => [qw/me.content_type me.size me.filename user.fname user.mname user.lname user.quality/],
+            as => [qw/content_type size filename fname mname lname quality/]
         }
     )->single();
     
@@ -53,7 +53,8 @@ sub get {
         mydata  => {
             fname => $user_info->get_column('fname'),
             mname => $user_info->get_column('mname'),
-            lname => $user_info->get_column('lname')
+            lname => $user_info->get_column('lname'),
+            quality => $user_info->get_column('quality'),
         },
         myphoto => {
             content_type    => $user_info->get_column('content_type'),
