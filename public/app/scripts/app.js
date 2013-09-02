@@ -8,13 +8,6 @@ app.services    = angular.module('ahs.services', ['ngResource']);
 app.controllers = angular.module('ahs.controllers', ['ahs.services','$strap.directives']);
 app.directives  = angular.module('ahs.directives', ['plcgi.mode','ahs.services']);
 
-//app.value('$strapConfig', {
-//  datepicker: {
-//    language: 'ru',
-//    format: 'yyyy-mm-dd'
-//  }
-//});
-
 app
     .config(function ($routeProvider,$httpProvider) {
         $routeProvider
@@ -37,6 +30,10 @@ app
               templateUrl: 'views/participants.html',
               controller: 'ProjectsCtrl'
             })
+            .when('/participants/:user_id', {
+              templateUrl: 'views/participant-detail.html',
+              controller: 'ParticipantCtrl'
+            })
             .when('/settings', {
               templateUrl: 'views/settings.html',
               controller: 'SettingsCtrl'
@@ -53,20 +50,27 @@ app
                 '$q',
                 'appLoading',
                 function (scope, $q,appLoading) {
-                
                     function success(response) {
                         appLoading.ready();
+                        $('#alert').html('');
                         //console.log(response);
                         return response;
                     }
             
                     function error(response) {
                         var status = response.status;
-            
+                       
                         if (status === 401) {
                             window.location = './401.html';
                             return;
                         }
+                        var res = $('#alert');
+                        var arr = [];
+                        
+                        for (var item in response.data) {
+                             arr.push('<div class="alert alert-error">'+response.data[item].error+'</div>')
+                        }
+                        $('#alert').html(arr.join(''));
                         // otherwise
                         appLoading.ready();
                         return $q.reject(response);

@@ -28,37 +28,73 @@ sub save {
 sub get {
     my ( $self, $param ) = @_;
     my $model       = $self->get_model;
-    my @rs = $model->resultset('UserInfo')->search(
-        {},
-        {
-            join => [qw/user/],
-            select => [qw/user.login user.fname user.lname me.filename user.id/],
-            as => [qw/login fname lname filename id/],
-            order_by => 'user.login'
-        }
-    );
     my $res;
-    foreach ( @rs ) {
-        my $f = $_->get_column('filename');
-        if ( $f ) {
-            $f = '/img/users/'.$_->get_column('login').'/'.$f;
-        }
-        else {
-            $f = '/img/users/no-photo.gif';
-        }
-        my $fio;
-        unless ( $_->get_column('fname') && $_->get_column('lname')) {
-            $fio = $_->get_column('login');
-        }
-        else {
-            $fio = $_->get_column('lname').' '.$_->get_column('fname');
-        }
-        push @$res,{
-            "fio" => $fio,
-            "login" => $_->get_column('login'),
-            "id" => $_->get_column('id'),
-            "filename" => $f ,
-        };
+    if ($param->{id}) {
+        my $rs = $model->resultset('UserInfo')->search(
+            { 'user.id' => $param->{id} },
+            {
+                join => [qw/user/],
+                select => [qw/user.login user.fname user.lname me.filename user.id user.quality/],
+                as => [qw/login fname lname filename id quality/],
+                order_by => 'user.login'
+            }
+        )->single;
+        my $f = $rs->get_column('filename');
+            if ( $f ) {
+                $f = '/img/users/'.$rs->get_column('login').'/'.$f;
+            }
+            else {
+                $f = '/img/users/no-photo.gif';
+            }
+            my $fio;
+            unless ( $rs->get_column('fname') && $rs->get_column('lname')) {
+                $fio = $rs->get_column('login');
+            }
+            else {
+                $fio = $rs->get_column('lname').' '.$rs->get_column('fname');
+            }
+        $res = [
+            {
+                "fio"       => $fio,
+                "login"     => $rs->get_column('login'),
+                "id"        => $rs->get_column('id'),
+                quality     => $rs->get_column('quality'),
+                "filename"  => $f ,
+            }
+        ];
+    }
+    else {
+        my @rs = $model->resultset('UserInfo')->search(
+            {},
+            {
+                join => [qw/user/],
+                select => [qw/user.login user.fname user.lname me.filename user.id/],
+                as => [qw/login fname lname filename id/],
+                order_by => 'user.login'
+            }
+        );
+        foreach ( @rs ) {
+            my $f = $_->get_column('filename');
+            if ( $f ) {
+                $f = '/img/users/'.$_->get_column('login').'/'.$f;
+            }
+            else {
+                $f = '/img/users/no-photo.gif';
+            }
+            my $fio;
+            unless ( $_->get_column('fname') && $_->get_column('lname')) {
+                $fio = $_->get_column('login');
+            }
+            else {
+                $fio = $_->get_column('lname').' '.$_->get_column('fname');
+            }
+            push @$res,{
+                "fio" => $fio,
+                "login" => $_->get_column('login'),
+                "id" => $_->get_column('id'),
+                "filename" => $f ,
+            };
+        }   
     }
     return $res;
 }

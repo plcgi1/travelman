@@ -1,6 +1,5 @@
 (function(){
 'use strict';
-//angular.module('ahsServices', ['ngResource'])
 var app = window.app;
 app.services
 	.factory('Participants', function($resource){

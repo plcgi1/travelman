@@ -44,18 +44,13 @@ app.controllers
         
         $scope.$on('userDataLoaded',function(scope,data){
             $rootScope.loginStatus = data.loginStatus;
-            console.log(data);
         });
         
-        //setTimeout(function(){
         $scope.setMode($routeParams.mode);
         
         if (!$scope.project) {
             init();
         }
-            
-        //},0);
-        
     }
 );
 })();

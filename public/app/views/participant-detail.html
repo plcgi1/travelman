@@ -1,0 +1,51 @@
+<ul class="breadcrumb">
+  <li><a href="#/participants">Участники</a> <span class="divider">/</span></li>
+  <li class="active" ng-bind="participant.fio"></li>
+</ul>
+<div ng-controller="ParticipantCtrl" class="media">
+  <a class="pull-left" href="#">
+	<img ng-src="{{participant.filename}}" alt="" width="100" height="100" class="img-circle media-object pull-right"/>
+  </a>
+  <div class="media-body">
+	<h4 class="media-heading">{{participant.fio}}</h4>
+	
+	<div class="media">
+	  <h5 >{{participant.quality}}</h5>
+	  <h5 ng-show="participant.quality?0:1">Этот еще не определился</h5>
+	</div>
+  </div><br><br>
+  <h4>Данные об участнике</h4>
+  <div class="accordion" id="accordion2">
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>participant.fio_latin</h5>
+	  </div>	  
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>participant.birth</h5>
+	  </div>	  
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>participant.birth_place</h5>
+	  </div>	  
+	</div>
+	<h4>Проекты участника</h4>
+  <div class="accordion" id="accordion2">
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>project 1</h5>
+	  </div>	  
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>project 2</h5>
+	  </div>	  
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<h5>project 3</h5>
+	  </div>	  
+	</div>
+</div>
