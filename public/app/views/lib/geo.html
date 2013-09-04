@@ -7,8 +7,8 @@
 		<ul class="nav">
 			<li ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item,this)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 				Название: {{item.marker.getTitle()}}<br/>
-				Ш: {{item.marker.getPosition().lb}}<br/>
-				Д: {{item.marker.getPosition().mb}}
+				Ш: {{item.marker.getPosition().lat()}}<br/>
+				Д: {{item.marker.getPosition().lng()}}
 			</li>
 		</ul>
 	</div>
@@ -17,9 +17,9 @@
 		<br/><br/>
 		<div ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 			<button type="button" class="close" data-dismiss="alert" ng-click="removeMarker(item)">&times;</button>
-			<!--<div class="" ng-model="item.marker.getTitle()">Название: {{item.marker.getTitle()}}</div>-->
-			<div class="" ng-bind="item.marker.getPosition().lb">Ш: {{item.marker.getPosition().lb}}</div>
-			<div class="" ng-bind="item.marker.getPosition().mb">Д: {{item.marker.getPosition().mb}}</div>			
+			<div class="" >Название: <span ng-bind="item.marker.getTitle()"></span></div>
+			<div class="" >Ш:<span ng-bind="item.marker.getPosition().lat()"></span></div>
+			<div class="" >Д:<span ng-bind="item.marker.getPosition().lng()"></span></div>			
 		</div>
 	</div>
 </section>
@@ -29,11 +29,11 @@
 <div class="google-map">
     <div class="">
         <label class="string required" for="name">Название места</label>
-        <input type="text" name="name" ng-model="currentMarker.name"/>
+        <input type="text" name="name" class="span7" ng-model="currentMarker.name"/><br/>
 		<label class="string required" for="lattitude">Широта</label>
-        <input type="text" name="lattitude" id="lattitude" ng-model="currentMarker.lat"/>
+        <input type="text" name="lattitude" class="span7" id="lattitude" ng-model="currentMarker.lat"/><br/>
 		<label class="string required" for="longtitude">Долгота</label>
-        <input type="text" name="longtitude" id="longtitude" ng-model="currentMarker.lng"/>
+        <input type="text" name="longtitude" class="span7" id="longtitude" ng-model="currentMarker.lng"/>
         <div>
         	<a class="btn save" id="saveGeodata" ng-click="saveGeo()">Сохранить</a>
         </div>

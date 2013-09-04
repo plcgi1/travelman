@@ -31,12 +31,13 @@
 					if ($scope.mode === 'edit') {
 						google.maps.event.addDomListener($scope.map, 'click', function(evt) {
 							var marker = $scope.addMarker(evt.latLng);
-							openInfoWindow(marker);
+							openInfoWindow({marker:marker});
 						});
 					}
 				});
 
 				function openInfoWindow(obj) {
+					//console.log(obj.getPosition().lat());
 					if (!obj.marker) {
 						var center = $scope.map.getCenter();
 						obj.marker = new google.maps.Marker({
@@ -51,8 +52,8 @@
 
 					}
 					$scope.currentMarker = {
-						lat: obj.marker.getPosition().lb,
-						lng: obj.marker.getPosition().mb,
+						lat: obj.marker.getPosition().lat(),
+						lng: obj.marker.getPosition().lng(),
 						name: obj.marker.getTitle(),
 						id: obj.id
 					};

@@ -81,6 +81,8 @@ __PACKAGE__->table("user_info");
 __PACKAGE__->add_columns(
   "user_id",
   { data_type => "bigint", is_nullable => 0 },
+  "birth",
+  { data_type => "bigint", is_nullable => 0 },
   "phone1",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "phone2",

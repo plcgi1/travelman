@@ -68,7 +68,7 @@ app
                         var arr = [];
                         
                         for (var item in response.data) {
-                             arr.push('<div class="alert alert-error">'+response.data[item].error+'</div>')
+                             arr.push('<div class="alert alert-error">'+response.data[item].error+'</div>');
                         }
                         $('#alert').html(arr.join(''));
                         // otherwise
