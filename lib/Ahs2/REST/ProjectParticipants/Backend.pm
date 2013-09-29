@@ -48,7 +48,7 @@ sub get {
                 $f = '/img/users/'.$rs->get_column('login').'/'.$f;
             }
             else {
-                $f = '/img/users/no-photo.gif';
+                $f = $self->get_config->{static}->{no_photo};
             }
             my $fio;
             unless ( $rs->get_column('fname') && $rs->get_column('lname')) {
@@ -85,7 +85,7 @@ sub get {
                 $f = '/img/users/'.$_->get_column('login').'/'.$f;
             }
             else {
-                $f = '/img/users/no-photo.gif';
+                $f = $self->get_config->{static}->{no_photo};
             }
             my $fio;
             unless ( $_->get_column('fname') && $_->get_column('lname')) {
@@ -140,7 +140,7 @@ sub _get_projects {
 			$thumb = $thumb->[0]->{thumb};
 		}
 		else {
-			$thumb = '/images/no-photo.gif';
+			$thumb = $self->get_config->{static}->{no_photo};
 		}
 		push @res, {
 			thumb   => $thumb,

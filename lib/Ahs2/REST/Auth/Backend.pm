@@ -30,7 +30,8 @@ sub login {
     my $config  = $self->get_config;
     my $session = $self->get_session();
     my $res;
-	if ( $session->{user}) {
+	
+	if ( $session->{user} && $session->{user}->{id} ) {
 		$res = { location => '/app/index.html'  };
 	}
 	else {
@@ -65,7 +66,7 @@ sub login {
 				email_confirmed => $user[0]->get_column('email_confirmed'),
                 loginStatus 	=> 1
 			};
-			
+						
 			$self->get_session->{user} 	= $user;
 			
 			my $default_page = $res->{acl}->{page}->[0];
@@ -153,7 +154,7 @@ sub isauth {
     
     # make return with values - for tests
     my $res = $self->get_session->{user};
-
+warn Dumper $session;
     return $res;
 
 }

@@ -18,7 +18,7 @@ sub get {
             $res = $self->_get_for_new($param,$model,$formatter);
         }
         else {
-            $res = $self->_get_by_id($param,$model,$formatter);
+            $res = $self->_get_by_id($param,$model,$formatter,$session);
             $res->{photo} = $self->_get_project_photo($param);
         }
         $session->{project} = $res;
@@ -39,15 +39,17 @@ sub get {
         );
         foreach ( @rs ) {
             my $can_edit = '0';
+
             if ($_->get_column('owner_id') eq $session->{user}->{id}) {
                 $can_edit = 1;
             }
+			
 			my $thumb = $self->_get_project_photo({id=>$_->get_column('id')});
 			if ($thumb) {
 				$thumb = $thumb->[0]->{thumb};
 			}
 			else {
-				$thumb = '/images/no-photo.gif';
+				$thumb = $config->{static}->{no_photo};
 			}
             push @$res, {
 				thumb   => $thumb,
@@ -76,7 +78,7 @@ sub _get_project_photo {
 }
 
 sub _get_by_id {
-    my($self,$param,$model,$formatter) = @_;
+    my($self,$param,$model,$formatter,$session) = @_;
     
     my $res;
     #"id" : "3",
@@ -98,7 +100,7 @@ sub _get_by_id {
     $res->{name}    = $project->get_column('name');
     $res->{from}    = $formatter->format_ts_ymd($project->get_column('start'));
     $res->{to}      = $formatter->format_ts_ymd($project->get_column('end'));
-    $res->{can_edit}= 1;
+    $res->{can_edit}= ($project->get_column('owner_id') eq $session->{user}->{id});
         
     my @goals = $model->resultset('Goal')->search({project_id => $param->{id}},{ sort_by => 'name'});
     foreach ( @goals ) {
@@ -148,7 +150,7 @@ sub _get_by_id {
             $f = '/img/users/'.$user->get_column('login').'/'.$f;
         }
         else {
-            $f = '/img/users/no-photo.gif';
+            $f = $self->get_config->{static}->{no_photo};
         }
         my $hash = {
             "fio" => $user->get_column('login'),
@@ -185,7 +187,7 @@ sub _get_for_new {
         push @{$res->{participants}},{
             "fio"       => $_->[0],
             "id"        => $_->[3],
-            "filename"  => $_->[5] || 'images/no-photo.gif'
+            "filename"  => $_->[5] || $self->get_config->{static}->{no_photo}
         };
     }
     return $res;

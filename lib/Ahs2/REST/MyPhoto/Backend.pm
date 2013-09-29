@@ -94,13 +94,13 @@ sub get {
         }
         else {
             $res = {
-                filename        => '../no-photo.gif',
+                filename        => $self->get_config->{static}->{no_photo}
             }
         }
     }
     else {
         $res = {
-            filename        => '../no-photo.gif',
+            filename        => $self->get_config->{static}->{no_photo}
         }
     }
     return $res;

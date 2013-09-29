@@ -8,7 +8,7 @@
    
   <div class="btn-toolbar">
 	<div class="btn-group pinned">
-	  <a class="btn" ng-show="user.loginStatus==1" ng-disabled="mode=='view'" ng-click="setMode('view')" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Просмотр</a>
+	  <a class="btn" ng-show="user.loginStatus==1 && project.can_edit==1" ng-disabled="mode=='view'" ng-click="setMode('view')" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Просмотр</a>
 	  <a class="btn show4logged" ng-show="user.loginStatus==1 && project.can_edit==1" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
 	</div>
   </div>

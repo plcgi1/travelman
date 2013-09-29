@@ -7,7 +7,7 @@ app.controller('AuthCtrl', function ($scope,$http,$routeParams,$rootScope,EventB
 		$scope.authenticating = 1;
 		$scope.showErrorMessage = false;
 		function success(data){
-			location.href = data.location;
+			//location.href = data.location;
 			$scope.authenticating = false;
 		}
 		function error(){
