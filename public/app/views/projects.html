@@ -1,10 +1,4 @@
 <a ng-show="user.loginStatus==1" href="#/projects/project/new/edit" class="btn"><i class="icon-plus"></i> Добавить</a>
 <div ng-controller="ProjectsCtrl">
-	<div class="label top" ng-repeat="item in projects">
-		<p class="cliped">{{item.label}}</p>
-		<a href="{{item.path}}" class="hovertext">
-			<img ng-src="{{item.thumb}}" alt="{{item.label}}" width="100%">
-		</a>
-		<div class="cliped">{{item.label}}</div>
-	</div>
+	<ng-include src="'views/lib/projects.html'"></ng-include>
 </div>

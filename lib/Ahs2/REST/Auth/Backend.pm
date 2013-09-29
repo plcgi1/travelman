@@ -98,7 +98,7 @@ sub login_via_provider {
 			},
 		);
 		if ( $user ) {
-			$user->actions('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]');
+			$user->actions('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]');
 			$user->updated(time);
 			$user->login($param->{username});
 			$user->fname($param->{first_name});

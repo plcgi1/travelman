@@ -5,6 +5,7 @@ app.controllers
     .controller('ParticipantCtrl', function ($scope,$routeParams,Participants,EventBus) {
         $scope.participant =  Participants.query({ id : $routeParams.user_id }, function(data) {
 			$scope.participant = data[0];
+			$scope.projects    = $scope.participant.projects;
 		});
     }
 );

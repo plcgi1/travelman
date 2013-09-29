@@ -39,7 +39,7 @@ sub get {
         );
         foreach ( @rs ) {
             my $can_edit = '0';
-            if ($_->get_column('owner_id') eq $session->{iser}->{id}) {
+            if ($_->get_column('owner_id') eq $session->{user}->{id}) {
                 $can_edit = 1;
             }
 			my $thumb = $self->_get_project_photo({id=>$_->get_column('id')});
