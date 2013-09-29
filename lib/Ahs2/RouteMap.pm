@@ -13,6 +13,8 @@ my $rules = [
     
     { path => '/ahs/projects/project/goals$', class => 'Ahs2::REST::ProjectGoals::SP' },
     
+    { path => '/ahs/projects/project/photo$', class => 'Ahs2::REST::ProjectPhoto::SP' },
+    
     { path => '/ahs/projects/project/place$', class => 'Ahs2::REST::ProjectPlace::SP' },
     
     { path => '/ahs/projects$', class => 'Ahs2::REST::Project::SP' },
@@ -22,6 +24,8 @@ my $rules = [
     { path => '/ahs/projects/project/participants$', class => 'Ahs2::REST::ProjectParticipants::SP' },
     
     { path => '/ahs/settings/mydata$', class => 'Ahs2::REST::Settings::SP' },
+    
+    { path => '/ahs/user/info', class => 'Ahs2::REST::UserInfo::SP' },
     
     { path => '/ahs/settings/myquality$', class => 'Ahs2::REST::MyQuality::SP' },
     

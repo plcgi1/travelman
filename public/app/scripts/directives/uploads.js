@@ -11,7 +11,9 @@
 				target : '@target',
 				name : '@name',
 				uploadns : '@uploadns',
-				model : '=model'
+				model : '=model',
+				uploadfunc: '=uploadfunc',
+				removefunc: '=removefunc'
 			},
 			templateUrl: 'views/lib/uploads.html',
 			controller: function($scope, $attrs,$http) {
@@ -55,6 +57,9 @@
 						}
 					});
 				}
+				var removefunc = attr.removefunc;
+				var uploadfunc = attr.uploadfunc;
+				console.log(removefunc);
 				scope.upload = upload;
 			}
 		};

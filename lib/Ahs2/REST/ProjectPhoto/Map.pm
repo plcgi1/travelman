@@ -1,25 +1,22 @@
-package Ahs2::REST::ProjectInfo::Map;
+package Ahs2::REST::ProjectPhoto::Map;
 use strict;
 
 my $map = [
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/projects/project/info$',
+        regexp    => '/ahs/projects/project/photo$',
         # func name in Backend module
         func_name => 'save',
         # unique name for service - used in javascript validator rules
-        name      => 'PRJ_INFO_SAVE',
+        name      => 'PRJ_PHOTO_SAVE',
         
         in        => {
             skip_from_uri => 1,
             param         => [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
-				{ name => 'id',    rules => [ {rule => 'pattern', param => '^(\d+|new)$' } ], required => 1, error => "Bad id" },
-				{ name => 'from',  rules => [ {rule => 'iso8601', } ], required => 1, error => "Bad from" },
-				{ name => 'to',    rules => [ {rule => 'iso8601', } ], required => 1, error => "Bad to" },
-				{ name => 'name',  rules => [ {rule => 'anyText', } ], required => 1, error => "Bad anyText" },
-				{ name => 'file',     rules => [ {rule => 'anyText' } ], error => "Bad value for 'file'" },
+				{ name => 'file',     rules => [ {rule => 'anyText' } ], required => 1, error => "Bad value for 'file'" },
+				{ name => 'project_id', rules => [ {rule => 'integer' } ], required => 1, error => "Bad id" },
             ]
         },
         # service output description
@@ -34,7 +31,7 @@ my $map = [
     },
 	{
         # regexp or absolute value for url to service
-        regexp    => '/ahs/projects/project/info$',
+        regexp    => '/ahs/projects/project/photo$',
         # func name in Backend module
         func_name => 'get',
         # unique name for service - used in javascript validator rules
@@ -46,9 +43,6 @@ my $map = [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
 				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
-				{ name => 'from',       rules => [ {rule => 'soft_iso8601', } ], error => "Bad from" },
-				{ name => 'to',       rules => [ {rule => 'soft_iso8601', } ], error => "Bad to" },
-				{ name => 'name',       rules => [ {rule => 'anyText', } ], error => "Bad anyText" },
             ]
         },
         # service output description
@@ -64,7 +58,7 @@ my $map = [
 	
 	{
         # regexp or absolute value for url to service
-        regexp    => '/ahs/projects/project/info$',
+        regexp    => '/ahs/projects/project/photo$',
         # func name in Backend module
         func_name => 'remove',
         # unique name for service - used in javascript validator rules

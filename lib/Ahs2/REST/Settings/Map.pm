@@ -42,6 +42,7 @@ my $map = [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
 				{ name => 'quality',       rules => [ {rule => 'anyText' } ], required => 1, error => "Bad quality" },
+				{ name => 'birth',         rules => [ {rule => 'anyText' } ], required => 1, error => "Bad birth" },
 				{ name => 'fname',         rules => [ {rule => 'anyText' } ], error => "Bad fname" },
 				{ name => 'lname',         rules => [ {rule => 'anyText' } ], error => "Bad lname" },
 				{ name => 'mname',         rules => [ {rule => 'anyText' } ], error => "Bad mname" },

@@ -1,3 +1,10 @@
-<ul class="nav"  ng-controller="NavCtrl">
-  <li ng-repeat="item in model" class="alert alert-info"><a href="{{item.path}}">{{item.label}}</a></li>
+<ul class="thumbnails"  ng-controller="NavCtrl">
+  <li ng-repeat="item in model" class="span3" style="margin:2px;">
+	<div class="thumbnail thumbnail-fixheight">
+	  <a href="{{item.path}}">
+      <img src="{{item.thumb}}" alt="" width="120" height="120">
+      <b>{{item.label}}</b>
+	  </a>
+    </div>
+  </li>
 </ul>

@@ -1,5 +1,6 @@
 package Ahs2::REST::Project::Backend;
 use common::sense;
+use Ahs2::REST::ProjectPhoto::Backend;
 use base 'Ahs2::REST::Backend';
 use Data::Dumper;
 
@@ -18,7 +19,10 @@ sub get {
         }
         else {
             $res = $self->_get_by_id($param,$model,$formatter);
+            $res->{photo} = $self->_get_project_photo($param);
         }
+        $session->{project} = $res;
+		$res = [$res];
     }
     else {
         my @rs = $self->get_model->resultset('Project')->search(
@@ -38,7 +42,15 @@ sub get {
             if ($_->get_column('owner_id') eq $session->{iser}->{id}) {
                 $can_edit = 1;
             }
+			my $thumb = $self->_get_project_photo({id=>$_->get_column('id')});
+			if ($thumb) {
+				$thumb = $thumb->[0]->{thumb};
+			}
+			else {
+				$thumb = '/images/no-photo.gif';
+			}
             push @$res, {
+				thumb   => $thumb,
                 id      => $_->get_column('id'),
                 can_edit=> $can_edit,
                 label   => $formatter->encode_utf($_->get_column('name')),
@@ -53,6 +65,13 @@ sub get {
         }
     }
     
+    return $res;
+}
+
+sub _get_project_photo {
+    my($self,$param) = @_;
+    my $photo = Ahs2::REST::ProjectPhoto::Backend->new({ config => $self->get_config });
+    my $res = $photo->get($param);
     return $res;
 }
 

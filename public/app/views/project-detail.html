@@ -16,18 +16,85 @@
   <div class="accordion" id="accordion2">
 	<div class="accordion-group">
 	  <div class="accordion-heading">
+		<center><h4>Данные</h4></center>
+	  </div>
+	  <div id="info" class="accordion-body collapse in">
+		<div class="accordion-inner">
+			<div ng-show="mode=='view'">
+				<h5>{{project.name}}</h5>
+			</div>
+			<div ng-show="mode=='edit'">
+				<div class="control-group">
+					<span>Заголовок проекта</span>
+					<div>
+					  <input type="text" class="input-medium span10" ng-model="project.name" name="name" id="project-name" enter-submit='save("ProjectInfo")' required/>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
+		<center><h4>Дата проекта</h4></center>
+	  </div>
+	  <div id="info" class="accordion-body collapse in">
+		<div class="accordion-inner">
+			<div ng-show="mode=='view'">
+				C <span class="" ng-bind="project.from"></span>
+				До <span class="" ng-bind="project.to"></span>
+			</div>
+			<div ng-show="mode=='edit'">
+				<div class="control-group">
+					<span class="span4">
+						<span>Дата начала</span>
+						<div class="control-group input-append">
+							<input type="text" ng-model="project.from" data-date-format="yyyy-mm-dd" bs-datepicker>
+							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						</div>
+					</span>
+				
+					<span class="span4">
+						<span>Дата окончания</span>
+						<div class="control-group input-append">
+							<input type="text" ng-model="project.to" data-date-format="yyyy-mm-dd" bs-datepicker>
+							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						</div>
+					</span>
+					<a class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-check"></i>&nbsp;Сохранить</a>  
+				</div>
+				
+			</div>
+		</div>
+	  </div>
+	</div>
+	<div class="accordion-group">
+	  <div class="accordion-heading">
 		<center><h4>
-		  Данные
+		  Фото проекта
 		</h4>
 		  </center>
 	  </div>
 	  <div id="info" class="accordion-body collapse in">
 		<div class="accordion-inner">
-		  <projectinfo ng-model="project" mode="view"></projectinfo>
-		  <a class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-check"></i>&nbsp;Сохранить</a>  
+		  <ul class="nav nav-tabs nav-stacked">
+			<li class="">
+				<span  class="">
+				<a ng-href="{{project.photo[0].path}}" target="_blank">
+				  <img ng-src="{{project.photo[0].thumb}}" resize-max-height="120" resize-max-width="120" resize-quality="0.7"/>
+				</a>
+				
+				</span>
+				<span class="span3 pull-right" ng-show="mode=='edit'">
+					<upload target="/ahs/projects/project/photo" name="media"></upload>
+				</span>	
+			</li>
+		  </ul>
+		  
 		</div>
 	  </div>
 	</div>
+	
 	<div class="accordion-group" ng-show="project.id!='new'">
 	  <div class="accordion-heading">
 		<center><h4>
@@ -56,8 +123,7 @@
 	<div class="accordion-group" ng-show="project.id!='new'">
 	  <div class="accordion-heading" >
 		<h4>
-		  <center>Местоположение</center>
-		  
+		  <center>Местоположение</center>		  
 		</h4>
 	  </div>
 	  <div id="place" class="accordion-body collapse in">

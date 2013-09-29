@@ -112,8 +112,7 @@ builder {
             );
             my $info_hash = $userinfo->ask( $self->{provider} );   # load Plack::Middleware::OAuth::UserInfo::Twitter
             my $auth = Ahs2::Model::Oauth->new({ model => $model, config => $config, session => $self->{env}->{'psgix.session'} });
-            use Data::Dumper;
-            warn Dumper $info_hash;
+            
             my $res = $auth->login($info_hash,$self->{provider});
             
             return $self->redirect( $res->{location} );

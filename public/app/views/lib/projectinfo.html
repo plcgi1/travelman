@@ -8,23 +8,24 @@
 	</div>
 	<div ng-switch-when="edit">
 		<div class="control-group">
-		<div class="controls">
-		  <input type="text" class="input-medium span8" ng-model="project.name" name="name" id="project-name" required/>
-		</div>
-		<span class="span4">
-			<span>Дата начала</span>
-			<div class="control-group input-append">
-				<input type="text" ng-model="project.from" data-date-format="yyyy-mm-dd" bs-datepicker>
-				<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			<div class="controls">
+			  <input type="text" class="input-medium span8" ng-model="project.name" name="name" id="project-name" required/>
 			</div>
-		</span>
+			<span class="span4">
+				<span>Дата начала</span>
+				<div class="control-group input-append">
+					<input type="text" ng-model="project.from" data-date-format="yyyy-mm-dd" bs-datepicker>
+					<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+				</div>
+			</span>
 		
-		<span class="span4">
-			<span>Дата окончания</span>
-			<div class="control-group input-append">
-				<input type="text" ng-model="project.to" data-date-format="yyyy-mm-dd" bs-datepicker>
-				<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-			  </div>
-		</span>
+			<span class="span4">
+				<span>Дата окончания</span>
+				<div class="control-group input-append">
+					<input type="text" ng-model="project.to" data-date-format="yyyy-mm-dd" bs-datepicker>
+					<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+				</div>
+			</span>		
+		</div>
 	</div>
 </section>

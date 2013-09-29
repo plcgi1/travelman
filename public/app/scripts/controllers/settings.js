@@ -1,13 +1,15 @@
 (function() {
 	'use strict';
 	var app = window.app;
-	angular.module('AhsApp').controller('SettingsCtrl', function($scope, $http, $routeParams, Settings,Uploads,MyPassword) {
+	angular.module('AhsApp').controller('SettingsCtrl', function($scope, $http, $routeParams, $filter, Settings,Uploads,MyPassword) {
 		$scope.mode = $routeParams.mode || 'view';
 		$scope.myphoto = {};
 		$scope.mypassword = {
 			1 : '',
 			2 : ''
 		};
+		$scope.dateOptions = { format: 'yyyy-mm-dd' };
+		
 		$scope.myphoto = Settings.query({}, function(data) {
 			$scope.myphoto = data.myphoto;
 			$scope.mydata  = data.mydata;
@@ -22,15 +24,13 @@
 			$scope.myphoto.filename = data.filename;
 		});
 		
-		$scope.$on('myqualityUploaded', function(evt, data) {
-			//alert('myqualityUploaded');
-			$scope.myquality = data.myquality;
-		});
-		
 		function save(data) {
+			$scope.mydata.birth = $filter('date')($scope.mydata.birth,'yyyy-MM-dd');
+			console.log($scope.mydata.birth);
 			Settings.save($scope.mydata, function(data) {
 				$scope.myphoto = data.myphoto;
 				$scope.mydata  = data.mydata;
+				$scope.birth   = data.birth;
 			});	
 		}
 		function save_password() {

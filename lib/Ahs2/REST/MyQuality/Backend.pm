@@ -15,8 +15,8 @@ sub save {
     
     my $files = $self->get();
     if ( $param->{file}->filename ) {
-        $param->{out_dir} = 'myquality';
-        
+        $param->{out_dir} = $config->{app_root}.'/public'.$config->{static}->{user_profile_path}.'/'.$session->{user}->{login}.'/myquality';
+	    
         my $file_data = $self->save_file($param);
         
         my $rs = $model->resultset('UserQualityFile')->find_or_create({
@@ -25,8 +25,9 @@ sub save {
             type            => $file_data->{type},
             size            => $file_data->{size},
             original_name   => $file_data->{original_name},
-            path            => $file_data->{full_filename}
+            path            => $config->{static}->{user_profile_path}.'/'.$session->{user}->{login}.'/myquality/'.$file_data->{filename}
         });
+        $file_data->{path} = $rs->get_column('path');
         $file_data->{id} = $rs->get_column('id');
         push @{$files->{myquality}},$file_data;
     }        

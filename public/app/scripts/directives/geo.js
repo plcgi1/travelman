@@ -123,12 +123,12 @@
 
 					for (var i = 0; i < $scope.markers.length; i++) {
 						var m = $scope.markers[i].marker;
-						if (m.getPosition().lb === marker.marker.getPosition().lb && m.getPosition().mb === marker.marker.getPosition().mb) {
+						if (m.getPosition().lat() === marker.marker.getPosition().lat() && m.getPosition().lng() === marker.marker.getPosition().lng()) {
 							m.setMap(null);
 							ProjectGeo.remove({
 								id: $scope.project.id,
-								lattitude: m.getPosition().lb,
-								longtitude: m.getPosition().mb
+								lattitude: m.getPosition().lat(),
+								longtitude: m.getPosition().lng()
 							});
 						} else {
 							arr.push($scope.markers[i]);

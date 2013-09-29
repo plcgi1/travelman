@@ -11,20 +11,29 @@ sub save {
     my $config  = $self->get_config;
     my $session = $self->get_session();
     my $model = $self->get_model;
-    
-    my $user_info = $model->resultset('User')->search(
+    my $fmt = $self->get_formatter();
+	
+    my $user = $model->resultset('User')->search(
         { id => $session->{user}->{id} },
     )->single();
     my $is_edit;
     foreach (qw/fname lname mname quality/) {
         if ($param->{$_}) {
-            $user_info->$_($param->{$_});
+            $user->$_($param->{$_});
             $is_edit++;
         }
     }
+	
     if ($is_edit) {
-        $user_info->update();
+        $user->update();
     }
+	if ($param->{birth}) {
+		my $birth    = (split 'T',$param->{birth})[0];
+		$birth = \"UNIX_TIMESTAMP('$birth')";
+		my $user_info = $user->user_info->single;
+		$user_info->birth($birth);
+		$user_info->update();
+	}
     my $res = $self->get($param);
     return $res;
 }
@@ -35,12 +44,14 @@ sub get {
     my $config  = $self->get_config;
     my $session = $self->get_session();
     my $model = $self->get_model;
+	my $fmt = $self->get_formatter();
+	
     my $user_info = $model->resultset('UserInfo')->search(
         { user_id => $session->{user}->{id} },
         {
             join => [qw/user/],
-            select => [qw/me.content_type me.size me.filename user.fname user.mname user.lname user.quality/],
-            as => [qw/content_type size filename fname mname lname quality/]
+            select => ['me.content_type', 'me.size', 'me.filename', 'user.fname', 'user.mname', 'user.lname', 'user.quality', 'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')'],
+            as => [qw/content_type size filename fname mname lname quality birth/]
         }
     )->single();
     
@@ -55,6 +66,7 @@ sub get {
             mname => $user_info->get_column('mname'),
             lname => $user_info->get_column('lname'),
             quality => $user_info->get_column('quality'),
+			birth   => $user_info->get_column('birth'),
         },
         myphoto => {
             content_type    => $user_info->get_column('content_type'),

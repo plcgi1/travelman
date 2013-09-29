@@ -1,5 +1,9 @@
 body {
-	background: url(//www.joeydevilla.com/wordpress/wp-content/uploads/2007/07/opposite-world-map.jpg)  no-repeat 0 0;
+	background: url(//www.joeydevilla.com/wordpress/wp-content/uploads/2007/07/opposite-world-map.jpg)  no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
 	background-size: cover;
 }
 
@@ -114,6 +118,72 @@ h2 {
 .disabled {
 	opacity: 0.5;
 }
+.cliped {
+	text-overflow: ellipsis;
+	overflow: hidden;
+    white-space: nowrap;
+    word-wrap: normal; /* для IE */
+	
+	
+}
+.cliped:hover {
+	white-space: normal;	
+}
+
+.thumbnail > .thumb-item {
+	margin:2px;
+}
+.span2 > .thumbnail-fixheight {
+	height:185px;
+	//max-width:200px;
+}
+.span3 > .thumbnail-fixheight {
+	max-height:185px;
+	//max-width:200px;
+}
+
+.shadow {
+	-webkit-box-shadow: 0px 4px 12px rgba(50, 50, 50, 0.32);
+-moz-box-shadow:    0px 4px 12px rgba(50, 50, 50, 0.32);
+box-shadow:         0px 4px 12px rgba(50, 50, 50, 0.32);
+}
+
+.clipout{
+  position:relative;
+  width:136px;
+  height:105px;
+  top:-1px;
+  left:-1px;
+}
+.clipin{
+  position:absolute;
+  clip:rect(50px 218px 155px 82px);
+  top:-50px;
+  left:-82px;
+}
+.shade1{
+  width:136px;
+  height:105px;
+  background-color:#e8e8e8;
+}
+.shade2{
+  position:relative;
+  width:136px;
+  height:105px;
+  background-color:#cbcbcb;
+  top:-2px;
+  left:-2px;
+}
+.shade3{
+  position:relative;
+  width:136px;
+  height:105px;
+  background-color:#a0a0a0;
+  top:-1px;
+  left:-1px;
+}
+
+
 /*
 .social { list-style:none; }
 .social li { display:inline; float:left; }

@@ -1,6 +1,8 @@
 package Ahs2::REST::ProjectInfo::Backend;
 use common::sense;
+use Ahs2::REST::ProjectPhoto::Backend;
 use base 'Ahs2::REST::Project::Backend';
+
 use Data::Dumper;
 
 sub save {
@@ -48,7 +50,9 @@ sub save {
             $rs->update();
         }
     }
+    
     if ($res) {
+        
         $res = $self->get($res);
     }
     

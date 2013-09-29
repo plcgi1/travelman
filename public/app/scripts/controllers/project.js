@@ -1,9 +1,8 @@
-(function(){
+	(function(){
 'use strict';
 var app = window.app;
 app.controllers
-    .controller('ProjectCtrl', function ($scope,$http,$routeParams,$rootScope,Project,Mode,EventBus,ProjectInfo,ProjectGoals,ProjectGeo) {
-        var save = $('.save');
+    .controller('ProjectCtrl', function ($scope,$http,$routeParams,$rootScope,$filter,Project,Mode,EventBus,ProjectInfo,ProjectGoals,ProjectGeo,ProjectPhoto) {
         var map = {
             'ProjectInfo' : ProjectInfo,
             'ProjectGoals' : ProjectGoals,
@@ -13,25 +12,18 @@ app.controllers
             $scope.project = Project.query(
                 {project_id: $routeParams.project_id},
                 function(data) {
-                   
-                    $scope.project   = data;
+                    $scope.project   = data[0];
                     EventBus.prepForBroadcast('geoModelLoaded','model',$scope.project);
-                },
-                function (args) {
-                    
                 }
             );
         }
         
-        $scope.dateOptions = { format: 'yyyy-mm-dd' };
-       
-        $scope.setMode = function(mode){
-            $scope.mode = mode;
-            $scope.canProjectSaved = false;
-        };
-        
-        $scope.save = function(action,data){
+        function save(action,data) {
+			$scope.project.from = $filter('date')($scope.project.from,'yyyy-MM-dd');
+			$scope.project.to = $filter('date')($scope.project.to,'yyyy-MM-dd');
+			
             map[action].save($scope.project,function(data){
+                data = data[0];
                 if (!(data.goals && data.goals.length>0)) {
                     data.goals = [];
                 }
@@ -40,14 +32,25 @@ app.controllers
                 }
                 $scope.project = data;
             });
-        };
-        
+        }
+        function setMode(mode) {
+            $scope.mode = mode;
+            $scope.canProjectSaved = false;
+        }
+        $scope.dateOptions = { format: 'yyyy-mm-dd' };
+		
+		$scope.$on('uploadComplete', function(evt, data) {
+			$scope.project.photo = data;
+		});
+		
         $scope.$on('userDataLoaded',function(scope,data){
             $rootScope.loginStatus = data.loginStatus;
         });
         
-        $scope.setMode($routeParams.mode);
+        $scope.save = save;
+        $scope.setMode = setMode;
         
+        setMode($routeParams.mode);
         if (!$scope.project) {
             init();
         }

@@ -34,7 +34,6 @@ sub validate {
         return $self->set_error($res->status,$res->message);
     }
     
-    
     if ( $self->request->method eq 'POST' ){
         
         # допустимый размер    

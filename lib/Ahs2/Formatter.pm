@@ -39,6 +39,11 @@ sub to_uts {
     return $res;
 }
 
+sub to_uts_simple {
+	my ($self, $date_time ) = @_;
+	my($d,$t) = split ' ',$date_time;
+	return $self->to_uts({ date => $d,time => $t });
+}
 
 1;
 

@@ -13,6 +13,8 @@
 			},
 			link: function(scope, el, attr) {
 				var url = attr.target;
+				scope.name = attr.name;
+				
 				function upload() {
 					var loader = el.find('.progressbar')[0];
 					loader.value = 0;
@@ -25,7 +27,6 @@
 							loader.value = Math.round((e.loaded / e.total) * 100);
 						},
 						oncomplete: function(e) {
-							//var resp = eval('(' + e.target.response + ')');
 							var resp = JSON.parse(e.target.response);
 
 							loader.value = 100;

@@ -1,0 +1,99 @@
+/*http://designshack.net/tutorialexamples/imagelabellibrary/index.html*/
+/*LABELS*/
+.label {
+	max-width: 120px;
+	/*Position*/
+	overflow: hidden;
+	position: relative;
+	margin: 5px;
+	display: inline-block;
+	vertical-align: top;
+	
+	/*Skin*/
+	border: 7px solid #fff;
+	-webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.5), 0px 10px 7px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0px 2px 4px rgba(0,0,0,0.5), 0px 10px 7px rgba(0,0,0,0.2);
+	box-shadow: 0px 2px 4px rgba(0,0,0,0.5), 0px 10px 7px rgba(0,0,0,0.2);
+	
+	//background: white;
+}
+
+.label img {
+	display: block;
+	padding:0;
+}
+
+.label p {
+	/*Position*/
+	position: absolute;
+	padding: 0px;
+	width: 100%;
+	
+	/*Skin*/
+	//background: #000; /*fallback*/
+	background: rgba(0,0,0,0.7);
+	color: #fff;
+	//font: bold italic 18px/1.5 Helvtica, Verdana, sans-serif;
+	
+	/*Animation*/
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+/*Top In Bounds*/
+.top:hover p, .topleft p, .topright p {
+	top: 0%;
+	white-space: normal;	
+}
+
+/*Top Out of Bounds*/
+.top p, .centertop p {
+	top: -50%;
+}
+
+/*Bottom In Bounds*/
+.bottom:hover p, .bottomleft p, .bottomright p {
+	bottom: 0%;
+}
+
+/*Bottom Out of Bounds*/
+.bottom p, .centerbottom p {
+	bottom: -50%;
+}
+
+/*Left In Bounds*/
+.bottomleft:hover p, .bottomright:hover p, .topleft:hover p, .topright:hover p, .centerleft:hover p, .centerright:hover p {
+	left: 0%;
+}
+
+/*Left Out of Bounds*/
+.bottomleft p, .topleft p, .centerleft p, .centerleft p {
+	left: -150%;
+}
+
+/*Right Out of Bounds 150%*/
+.bottomright p, .topright p, .centerright p {
+	left: 150%;
+}
+
+/*Centered From Bottom*/
+.centerbottom:hover p {
+	bottom: 50%;
+}
+
+/*Centered From Top*/
+.centertop:hover p, .centerleft p, .centerright p {
+	top: 50%;
+}
+
+/*Center Margin Fixes*/
+.centertop:hover p, .centerleft p, .centerright p {
+	margin-top: -20px;
+}
+
+.centerbottom:hover p {
+	margin-bottom: -20px;
+}
