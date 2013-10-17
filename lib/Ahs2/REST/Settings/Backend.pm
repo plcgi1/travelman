@@ -10,8 +10,8 @@ sub save {
 
     my $config  = $self->get_config;
     my $session = $self->get_session();
-    my $model = $self->get_model;
-    my $fmt = $self->get_formatter();
+    my $model 	= $self->get_model;
+    my $fmt 	= $self->get_formatter();
 	
     my $user = $model->resultset('User')->search(
         { id => $session->{user}->{id} },
@@ -47,11 +47,26 @@ sub get {
 	my $fmt = $self->get_formatter();
 	
     my $user_info = $model->resultset('UserInfo')->search(
-        { user_id => $session->{user}->{id} },
+        { 'me.user_id' => $session->{user}->{id} },
         {
-            join => [qw/user/],
-            select => ['me.content_type', 'me.size', 'me.filename', 'user.fname', 'user.mname', 'user.lname', 'user.quality', 'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')'],
-            as => [qw/content_type size filename fname mname lname quality birth/]
+            join => [qw/user passport/],
+            select => [
+				'me.content_type',
+				'me.size',
+				'me.filename',
+				'user.fname',
+				'user.mname',
+				'user.lname',
+				'user.quality',
+				'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')',
+				'FROM_UNIXTIME(passport.dob,\'%Y-%m-%d\')',
+				'passport.pob',
+				'FROM_UNIXTIME(passport.received,\'%Y-%m-%d\')',
+				'passport.serial',
+				'passport.org',
+				'passport.number','passport.latin_fname','passport.latin_lname'
+			],
+            as => [qw/content_type size filename fname mname lname quality birth dob pob received serial org number latin_fname latin_lname/]
         }
     )->single();
     	
@@ -72,8 +87,19 @@ sub get {
             content_type    => $user_info->get_column('content_type'),
             size            => $user_info->get_column('size'),
             filename        => $filename,
-            path            => $config->{static}->{user_profile_path}.'/'.$session->{user}->{login}.'/'.$filename
-        }
+            path            => $config->{static}->{user_profile_path}.'/'.$session->{user}->{login}.'/'.$filename,
+			
+        },
+		passport        => {
+			latin_fname => $user_info->get_column('latin_fname'),
+			latin_lname => $user_info->get_column('latin_lname'),
+			serial    => $user_info->get_column('serial'),
+			number    => $user_info->get_column('number'),
+			dob       => $user_info->get_column('dob'),
+			pob       => $user_info->get_column('pob'),
+			received  => $user_info->get_column('received'),
+			org       => $user_info->get_column('org'),
+		}
     };
 
     return $res;

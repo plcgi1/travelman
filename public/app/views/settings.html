@@ -1,36 +1,37 @@
 <div ng-controller="SettingsCtrl">
-  <div class="btn-toolbar">
-	<div class="btn-group pinned">
-	  <a class="btn" ng-show="user.loginStatus==1" ng-disabled="mode=='view'" ng-click="setMode('view')" href="#/settings/view"><i class="icon icon-eye-open"></i>&nbsp;Просмотр</a>
-	  <a class="btn show4logged" ng-show="user.loginStatus==1" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/settings/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
-	</div>
-  </div>
-  <div class="accordion" id="accordion2">
-	<div class="accordion-group">
-	  <div class="accordion-heading">
-		<center><h4>ФИО</h4></center>
-	  </div>
-	  <div id="fio" class="accordion-body collapse in">
-		<div class="accordion-inner">
-			<label ng-show="mode=='view'">
-			  <span ng-bind="mydata.fname"></span>&nbsp;
-			  <span ng-bind="mydata.mname"></span>&nbsp;
-			  <span ng-bind="mydata.lname"></span>
-			</label>
-			<span ng-show="mode=='edit'">
-			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.fname" />
-			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.mname"/>
-			  <input type="text" enter-submit='save(mydata)' ng-model="mydata.lname"/>
-			</span>
+	<div class="btn-toolbar">
+		<div class="btn-group pinned">
+			<a class="btn" ng-show="user.loginStatus==1" ng-disabled="mode=='view'" ng-click="setMode('view')" href="#/settings/view"><i class="icon icon-eye-open"></i>&nbsp;Просмотр</a>
+			<a class="btn show4logged" ng-show="user.loginStatus==1" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/settings/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
 		</div>
-	  </div>
 	</div>
 	<div class="accordion">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-			  <center><h4>Дата рождения</h4></center>
+		<div class="accordion-group collapse-header">
+			<div class="accordion-heading" ng-click="toggle_content('fio')">
+			  <center><h4>ФИО</h4></center>
 			</div>
 			<div id="fio" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					<label ng-show="mode=='view'">
+						<span ng-bind="mydata.fname"></span>&nbsp;
+						<span ng-bind="mydata.mname"></span>&nbsp;
+						<span ng-bind="mydata.lname"></span>
+					</label>
+					<span ng-show="mode=='edit'">
+						<input type="text" enter-submit='save(mydata)' ng-model="mydata.fname" />
+						<input type="text" enter-submit='save(mydata)' ng-model="mydata.mname"/>
+						<input type="text" enter-submit='save(mydata)' ng-model="mydata.lname"/>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="accordion">
+		<div class="accordion-group collapse-header">
+			<div class="accordion-heading" ng-click="toggle_content('date_of_birth')">
+			  <center><h4>Дата рождения</h4></center>
+			</div>
+			<div id="date_of_birth" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<label ng-show="mode=='view'">
 					<span class="" ng-bind="mydata.birth"></span>
@@ -47,14 +48,14 @@
 			</div>
 		</div>
 	</div>
-  <div class="accordion" id="accordion2">
-	<div class="accordion-group">
-	  <div class="accordion-heading">
+	<div class="accordion">
+	<div class="accordion-group collapse-header">
+	  <div class="accordion-heading " ng-click="toggle_content('photo')">
 		<center><h4>
 			Фото
 		</h4></center>
 	  </div>
-	  <div id="photo" class="accordion-body collapse in">
+	  <div id="photo" class="accordion-body collapse">
 		<div class="accordion-inner">
 			<span class="span3">
 				<img ng-src="{{myphoto.path}}" alt="" width="100" height="100" class="img-circle"/>
@@ -65,11 +66,11 @@
 		</div>
 	  </div>
 	</div>
-	<div class="accordion-group" >
-	  <div class="accordion-heading">
+	<div class="accordion-group collapse-header" >
+	  <div class="accordion-heading" ng-click="toggle_content('quality')">
 		  <center><h4>Квалификационные данные</h4></center>
 	  </div>
-	  <div id="quality" class="accordion-body collapse in">
+	  <div id="quality" class="accordion-body collapse">
 		<div class="accordion-inner">
 			<h5>Моя квалификация</h5>
 			<label ng-show="mode=='view'">
@@ -83,24 +84,116 @@
 		</div>
 	  </div>
 	</div>
-	<div class="accordion-group" ng-show="mode=='edit'">
-	  <div class="accordion-heading">
-		  <center><h4>Смена пароля</h4></center>
-	  </div>
-	  <div id="quality" class="accordion-body collapse in">
-		<div class="accordion-inner">
-		  <label>
-			  Пароль
-			</label>
-			<input type="password" ng-model="mypassword.1"/>
-			<label>
-			  Повторите пароль
-			</label>
-			<input type="password" ng-model="mypassword.2"/>
-			<br/>
-			<input type="button" ng-click="save_password()" value="Сохранить">
+	<div class="accordion-group collapse-header" >
+		<div class="accordion-heading" ng-click="toggle_content('passport')">
+			<center><h4>Паспортные данные</h4></center>
 		</div>
-	  </div>
+		<div id="passport" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<label ng-show="mode=='view'">
+					<span ng-bind="passport.latin_lname"></span>&nbsp;<span ng-bind="passport.latin_fname"></span>
+				</label>
+				<label ng-show="mode=='view'">
+					<span ng-bind="passport.serial"></span>
+					&nbsp;<span ng-bind="passport.number"></span>
+				</label>
+				<label ng-show="mode=='view'">
+					<span ng-bind="passport.dob"></span>
+					<span ng-bind="passport.pob"></span>
+				</label>
+				<label ng-show="mode=='view'">
+					<span ng-bind="passport.received"></span>
+					<span ng-bind="passport.org"></span>
+				</label>
+				<div ng-show="mode=='edit'">
+					<span class="span5">
+						<label>
+							Фамилия (латиница)
+						</label>
+						<input type="text" ng-model="passport.latin_fname"/>
+					</span>
+					<span class="span5">
+						<label>
+							Имя (латиница)
+						</label>
+						<input type="text" ng-model="passport.latin_lname"/>
+					</span>
+				</div>
+				<div ng-show="mode=='edit'">
+					<span class="span5">
+						<label>
+							Серийный номер
+						</label>
+						<input type="text" ng-model="passport.serial"/>
+					</span>
+					<span class="span5">
+						<label>
+							Номер паспорта
+						</label>
+						<input type="text" ng-model="passport.number"/>
+					</span>
+				</div>
+				<div ng-show="mode=='edit'">
+					<span class="span5 input-append">
+						<label>
+							Дата рождения
+						</label>
+						<input type="text" ng-model="passport.dob" data-date-format="yyyy-mm-dd" bs-datepicker>
+						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+					</span>
+					<span class="span5">
+						<label>
+							Место рождения
+						</label>
+						<input type="text" ng-model="passport.pob"/>
+					</span>
+				</div>
+				<div ng-show="mode=='edit'">
+					<span class="span5 input-append">
+						<label>
+							Дата выдачи
+						</label>
+						<input type="text" ng-model="passport.received" data-date-format="yyyy-mm-dd" bs-datepicker>
+						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+					</span>
+					<span class="span5">
+						<label>
+							Место выдачи (организация)
+						</label>
+						<input type="text" ng-model="passport.org"/>
+					</span>
+				</div>
+				<span class="span5">&nbsp;</span>
+				<span class="span5">
+				<input type="button" ng-show="mode=='edit'" ng-click="save_passport_data()" class="pull-right" value="Сохранить">
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group collapse-header" ng-show="mode=='edit'">
+		<div class="accordion-heading" ng-click="toggle_content('password-block')">
+			<center><h4>Смена пароля</h4></center>
+		</div>
+		<div id="password-block" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<span class="span5 input-append">
+					<label>
+						Пароль
+					</label>
+					<input type="password" ng-model="mypassword.1"/>
+				</span>
+				<span class="span5">
+					<label>
+						Повторите пароль
+					</label>
+					<input type="password" ng-model="mypassword.2"/>
+				</span>
+				<br/>
+				<span class="span10">
+				<input type="button" ng-click="save_password()" class="pull-right" value="Сохранить">
+				</span>
+			</div>
+		</div>
 	</div>
   </div>
 </div>

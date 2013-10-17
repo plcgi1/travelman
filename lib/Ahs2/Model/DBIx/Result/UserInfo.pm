@@ -120,4 +120,11 @@ __PACKAGE__->belongs_to(
   { id => "user_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
+
+__PACKAGE__->belongs_to(
+  "passport",
+  "Ahs2::Model::DBIx::Result::PassportData",
+  { user_id => "user_id" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+);
 1;

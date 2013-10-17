@@ -33,6 +33,8 @@ my $rules = [
     
     { path => '/ahs/projects/project/info$', class => 'Ahs2::REST::ProjectInfo::SP' },
     
+    { path => '/ahs/settings/passport$', class => 'Ahs2::REST::MyPassport::SP' },
+    
     { path => '/ahs/settings/password$', class => 'Ahs2::REST::MyPassword::SP' },
     
 ];
