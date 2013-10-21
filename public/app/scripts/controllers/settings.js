@@ -11,17 +11,7 @@
 		$scope.dateOptions = {
 			format: 'yyyy-mm-dd'
 		};
-
-		$scope.myphoto = Settings.query({}, function(data) {
-			$scope.myphoto = data.myphoto;
-			$scope.mydata = data.mydata;
-			$scope.passport = data.passport;
-		});
-
-		Uploads.query({}, function(data) {
-			$scope.myquality = data.myquality;
-		});
-
+	
 		$scope.$on('uploadComplete', function(evt, data) {
 			$scope.myphoto.path = data.filename_hash;
 			$scope.myphoto.filename = data.filename;
@@ -32,6 +22,12 @@
 			$scope.mydata = data.mydata;
 			$scope.passport = data.passport;
 			$scope.birth = data.birth;
+			
+			$scope.myrestrict = data.myrestrict;
+			
+			if ( $scope.myrestrict.view_passport_data === 1 ) {
+				$('#view_passport_data').checked();
+			}	
 		}
 
 		function save(data) {
@@ -50,21 +46,22 @@
 			$scope.passport.dob = $filter('date')($scope.passport.dob, 'yyyy-MM-dd');
 			$scope.passport.received = $filter('date')($scope.passport.received, 'yyyy-MM-dd');
 
-			console.log($scope.passport.received);
-			console.log($scope.passport.dob);
-
 			PassportInfo.save($scope.passport, settings_cb);
 		}
-
+		function save_restrict() {
+			Settings.save_restrict($scope.myrestrict, settings_cb);
+		}
 		function toggle_content(target_id) {
 			$('#' + target_id).collapse('toggle');
 		}
+		
 		$scope.save = save;
 		$scope.save_password = save_password;
 		$scope.save_passport_data = save_passport_data;
+		$scope.save_restrict = save_restrict;
 		$scope.toggle_content = toggle_content;
 
-		//$('.collapse').collapse('show');
+		Settings.query({}, settings_cb);
 	});
 
 })();

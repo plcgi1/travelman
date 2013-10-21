@@ -57,6 +57,32 @@ my $map = [
         
         # maybe POST GET PUT DELETE
         req_method => 'POST'
+    },
+	{
+        # regexp or absolute value for url to service
+        regexp    => '/ahs/settings/myrestrict$',
+        # func name in Backend module
+        func_name => 'save',
+        # unique name for service - used in javascript validator rules
+        name      => 'RESTRICT_SAVE',
+        
+        in        => {
+            skip_from_uri => 1,
+            param         => [
+                # some patterns to define field names and validation rules
+                # all rule names - in WOA::Validator::Rules::Base
+				{ name => 'view_passport_data',       rules => [ {rule => 'pattern', param => '1' } ], error => "Bad view_passport_Data" }
+            ]
+        },
+        # service output description
+        out			=>	{
+            mime_type => 'text/javascript',
+            # methods from View - you can implement your own
+            view_method => 'as_json'
+        },
+        
+        # maybe POST GET PUT DELETE
+        req_method => 'POST'
     }
 ];
 

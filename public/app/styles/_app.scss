@@ -118,17 +118,6 @@ h2 {
 .disabled {
 	opacity: 0.5;
 }
-.cliped {
-	text-overflow: ellipsis;
-	overflow: hidden;
-    white-space: nowrap;
-    word-wrap: normal; /* для IE */
-	
-	
-}
-.cliped:hover {
-	white-space: normal;	
-}
 
 .thumbnail > .thumb-item {
 	margin:2px;

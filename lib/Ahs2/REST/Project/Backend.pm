@@ -31,9 +31,17 @@ sub get {
             },
             {
                 join => [qw/owner/],
-                select => [qw/me.id me.name me.created me.updated me.start me.end owner.fname owner.lname owner.login owner.id/],
+                select => [
+					'me.id',
+					'me.name',
+					'FROM_UNIXTIME(me.created,\'%Y-%m-%d\')',
+					'FROM_UNIXTIME(me.updated,\'%Y-%m-%d\')',
+					'FROM_UNIXTIME(me.start,\'%Y-%m-%d\')',
+					'FROM_UNIXTIME(me.end,\'%Y-%m-%d\')',
+					'owner.fname','owner.lname','owner.login', 'owner.id'
+				],
                 as => [qw/id name created updated start end fname lname login owner_id/],
-                order_by => 'updated',
+                order_by => 'me.updated',
                 sort_by => 'desc'
             }
         );
@@ -57,10 +65,10 @@ sub get {
                 can_edit=> $can_edit,
                 label   => $formatter->encode_utf($_->get_column('name')),
                 path    => "#/projects/project/".$_->get_column('id')."/view",
-                created => $formatter->to_mysql_datetime($_->get_column('created')),
-                updated => $formatter->to_mysql_datetime($_->get_column('updated')),
-                from    => $formatter->to_mysql_datetime($_->get_column('start')),
-                to      => $formatter->to_mysql_datetime($_->get_column('end')),
+                created => $_->get_column('created'),
+                updated => $_->get_column('updated'),
+                from    => $_->get_column('start'),
+                to      => $_->get_column('end'),
                 owner   => $_->get_column('login'),
                 owner_name => $_->get_column('lname').' '.$_->get_column('fname')
             };

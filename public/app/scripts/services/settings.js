@@ -9,6 +9,11 @@
 				save: {
 					method: 'POST',
 					isArray: false
+				},
+				save_restrict: {
+					method: 'POST',
+					isArray: false,
+					url :'/ahs/settings/myrestrict'
 				}
 			}
 		);

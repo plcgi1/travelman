@@ -66,7 +66,9 @@ sub login {
 				email_confirmed => $user[0]->get_column('email_confirmed'),
                 loginStatus 	=> 1
 			};
-						
+			if ( $user[0]->get_column('settings') ) {
+				$user->{settings} = decode_json($user[0]->get_column('settings'));
+			}
 			$self->get_session->{user} 	= $user;
 			
 			my $default_page = $res->{acl}->{page}->[0];
@@ -154,7 +156,7 @@ sub isauth {
     
     # make return with values - for tests
     my $res = $self->get_session->{user};
-warn Dumper $session;
+
     return $res;
 
 }

@@ -125,6 +125,21 @@ __PACKAGE__->belongs_to(
   "passport",
   "Ahs2::Model::DBIx::Result::PassportData",
   { user_id => "user_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE", join_type => 'LEFT OUTER' },
 );
+
+# in a Book class (where Author has_many Books)
+#__PACKAGE__->belongs_to(
+#    'user_outer',
+#	"Ahs2::Model::DBIx::Result::User",
+#    { user_id => "user_id" },
+#    { join_type => 'outer', is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" }
+#);
+#
+#__PACKAGE__->belongs_to(
+#    'passport_outer',
+#	"Ahs2::Model::DBIx::Result::PassportData",
+#    { user_id => "user_id" },
+#    { join_type => 'outer', is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" }
+#);
 1;

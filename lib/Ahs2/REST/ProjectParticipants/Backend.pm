@@ -1,6 +1,7 @@
 package Ahs2::REST::ProjectParticipants::Backend;
 use strict;
 use Ahs2::REST::ProjectPhoto::Backend;
+use JSON::XS qw/decode_json/;
 use base 'Ahs2::REST::Project::Backend';
 use Data::Dumper;
 
@@ -38,25 +39,35 @@ sub get {
             { 'user.id' => $param->{id} },
             {
                 join => [qw/user/],
-                select => ['user.login', 'user.fname', 'user.lname', 'me.filename', 'user.id', 'user.quality', 'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')'],
-                as => [qw/login fname lname filename id quality birth/],
+                select => [
+					'user.login',
+					'user.fname',
+					'user.lname',
+					'me.filename',
+					'user.id',
+					'user.quality',
+					'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')',
+					'user.settings'
+				],
+                as => [qw/login fname lname filename id quality birth settings/],
                 order_by => 'user.login'
             }
         )->single;
         my $f = $rs->get_column('filename');
-            if ( $f ) {
-                $f = '/img/users/'.$rs->get_column('login').'/'.$f;
-            }
-            else {
-                $f = $self->get_config->{static}->{no_photo};
-            }
-            my $fio;
-            unless ( $rs->get_column('fname') && $rs->get_column('lname')) {
-                $fio = $rs->get_column('login');
-            }
-            else {
-                $fio = $rs->get_column('lname').' '.$rs->get_column('fname');
-            }
+		if ( $f ) {
+			$f = '/img/users/'.$rs->get_column('login').'/'.$f;
+		}
+		else {
+			$f = $self->get_config->{static}->{no_photo};
+		}
+		my $fio;
+		unless ( $rs->get_column('fname') && $rs->get_column('lname')) {
+			$fio = $rs->get_column('login');
+		}
+		else {
+			$fio = $rs->get_column('lname').' '.$rs->get_column('fname');
+		}
+				
         $res = [
             {
                 "fio"       => $fio,
@@ -68,6 +79,21 @@ sub get {
 				"projects" => $self->_get_projects({ session => $session, formatter => $formatter, model => $model,user_id => $param->{id} })
             }
         ];
+		my $settings = $rs->get_column('settings');
+		
+		if ( $settings ) {
+			$settings = decode_json($settings);
+			# если юзер - получатель инфы - руководитель проекта - в котором учавсвует запрашиваемый
+			my $is_user_in_owner_projects = $model->resultset('Project')->is_user_in_owner_projects($session->{user}->{id},$param->{id});
+			if ( $settings->{view_passport_data} eq '1' && $is_user_in_owner_projects ) {
+				my $rs = $model->resultset('PassportData')->search({ user_id => $param->{id} })->single;
+				if ( $rs ) {
+					foreach ( $rs->result_source->columns ) {
+						$res->[0]->{passport_data}->{$_} = $rs->get_column($_);
+					}
+				}
+			}	
+		}		
     }
     else {
         my @rs = $model->resultset('UserInfo')->search(

@@ -1,7 +1,12 @@
-<div class="label top" ng-repeat="item in projects">
-	<p class="cliped">{{item.label}}</p>
-	<a href="{{item.path}}" class="hovertext">
-		<img ng-src="{{item.thumb}}" alt="{{item.label}}" width="100%">
-	</a>
-	<div class="cliped">{{item.label}}</div>
+<div class="container-1">
+
+	<div class="box" ng-repeat="item in projects" style="background:url({{item.thumb}}) no-repeat">
+		<div class="cover right">
+		
+			<h4>{{item.label}}</h4>
+			<p>Проект с <span class="date">{{item.from}}</span> по <span class="date">{{item.to}}</span></p>
+			<div class="btn pull-right"><a href="{{item.path}}">К проекту</a></div>
+		</div>
+	</div>
+  
 </div>

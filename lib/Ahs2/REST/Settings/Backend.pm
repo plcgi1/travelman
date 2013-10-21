@@ -2,6 +2,7 @@ package Ahs2::REST::Settings::Backend;
 use common::sense;
 use Digest::MD5 qw/md5_hex/;
 use Encode qw(from_to decode is_utf8);
+use JSON::XS qw/decode_json encode_json/;
 use base 'Ahs2::REST::Backend';
 use Data::Dumper;
 
@@ -17,13 +18,21 @@ sub save {
         { id => $session->{user}->{id} },
     )->single();
     my $is_edit;
+	
     foreach (qw/fname lname mname quality/) {
         if ($param->{$_}) {
             $user->$_($param->{$_});
             $is_edit++;
         }
     }
-	
+	my $restricts;
+	foreach ( qw/view_passport_data/ ) {
+		$restricts->{$_} = $param->{$_};
+	}
+	if ($restricts) {
+		$user->settings(encode_json($restricts));
+		$is_edit++;
+	}
     if ($is_edit) {
         $user->update();
     }
@@ -34,6 +43,7 @@ sub save {
 		$user_info->birth($birth);
 		$user_info->update();
 	}
+		
     my $res = $self->get($param);
     return $res;
 }
@@ -47,7 +57,7 @@ sub get {
 	my $fmt = $self->get_formatter();
 	
     my $user_info = $model->resultset('UserInfo')->search(
-        { 'me.user_id' => $session->{user}->{id} },
+        { 'user.id' => $session->{user}->{id} },
         {
             join => [qw/user passport/],
             select => [
@@ -57,6 +67,7 @@ sub get {
 				'user.fname',
 				'user.mname',
 				'user.lname',
+				'user.settings',
 				'user.quality',
 				'FROM_UNIXTIME(me.birth,\'%Y-%m-%d\')',
 				'FROM_UNIXTIME(passport.dob,\'%Y-%m-%d\')',
@@ -66,10 +77,10 @@ sub get {
 				'passport.org',
 				'passport.number','passport.latin_fname','passport.latin_lname'
 			],
-            as => [qw/content_type size filename fname mname lname quality birth dob pob received serial org number latin_fname latin_lname/]
+            as => [qw/content_type size filename fname mname lname settings quality birth dob pob received serial org number latin_fname latin_lname/]
         }
     )->single();
-    	
+
     my $filename = $user_info->get_column('filename');
     
     #my $ext = (split '\.',$filename)[-1];
@@ -100,8 +111,10 @@ sub get {
 			received  => $user_info->get_column('received'),
 			org       => $user_info->get_column('org'),
 		}
-    };
-
+	};
+	if ( $user_info->get_column('settings') ) {
+		$res->{myrestrict} = decode_json($user_info->get_column('settings'));
+	}
     return $res;
 
 }

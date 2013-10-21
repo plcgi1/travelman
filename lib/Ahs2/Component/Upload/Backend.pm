@@ -55,7 +55,7 @@ sub save_file {
 	$base_name = $self->_get_thumb_filename($base_name);
 	my $thumb = $out_dir.'/'.$base_name;
 	my $image = Image::Resize->new($out_file);
-	my $gd = $image->resize(130, 130);
+	my $gd = $image->resize(250, 250);
     open(FH, '>'.$thumb);
     print FH $gd->jpeg();
     close(FH);
@@ -77,7 +77,7 @@ sub save_file {
 	my $mt = MIME::Types->new;
 	return {
 		filename => $filename,
-		thumb    => $thumb,
+		thumb    => $thumb,	
         type     => $mt->mimeTypeOf($filename)->type,
         size     => $param->{file}->size,
 		original_name 	=> $fmt->encode_utf($param->{file}->filename),

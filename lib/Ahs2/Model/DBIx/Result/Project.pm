@@ -182,4 +182,24 @@ __PACKAGE__->has_many(
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+__PACKAGE__->resultset_class('Ahs2::Model::DBIx::Result::Project::Resultset');
+
+package Ahs2::Model::DBIx::Result::Project::Resultset;
+
+use strict;
+use base qw/DBIx::Class::ResultSet/;
+use Log::Log4perl qw/get_logger/;
+
+my $logger = Log::Log4perl->get_logger('Ahs2.Model.DBIx.Result.Project.Resultset');
+
+sub is_user_in_owner_projects {
+    my ($self, $project_owner_id, $user_id ) = @_;
+  
+    my $sql = 'SELECT count(*) AS existed FROM project me JOIN user_project u ON me.id=u.project_id WHERE me.owner_id=? AND u.user_id=? LIMIT 1';
+    my $dbh = $self->result_source->storage->dbh;
+    my $rs = $dbh->selectall_arrayref($sql,{ Slice => {} }, $project_owner_id, $user_id );
+    my $res = ( $rs ? 1 : 0 );
+    return $res;
+}
 1;

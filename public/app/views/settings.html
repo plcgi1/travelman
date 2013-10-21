@@ -91,11 +91,15 @@
 		<div id="passport" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<label ng-show="mode=='view'">
+					<label>Фамилия Имя (латиница):</label>
 					<span ng-bind="passport.latin_lname"></span>&nbsp;<span ng-bind="passport.latin_fname"></span>
 				</label>
 				<label ng-show="mode=='view'">
+					<label>Серийный номер:</label>
 					<span ng-bind="passport.serial"></span>
-					&nbsp;<span ng-bind="passport.number"></span>
+					
+					<label>Номер паспорта:</label>
+					<span ng-bind="passport.number"></span>
 				</label>
 				<label ng-show="mode=='view'">
 					<span ng-bind="passport.dob"></span>
@@ -167,6 +171,24 @@
 				<span class="span5">
 				<input type="button" ng-show="mode=='edit'" ng-click="save_passport_data()" class="pull-right" value="Сохранить">
 				</span>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group collapse-header">
+		<div class="accordion-heading" ng-click="toggle_content('access-block')">
+			<center><h4>Доступ к моей информации</h4></center>
+		</div>
+		<div id="access-block" class="accordion-body collapse">
+			<label ng-show="mode=='view'" ng-class="myrestrict.view_passport_data == 1 ? 'active' : ''">
+			Разрешить видеть информацию из паспорта руководителю проекта
+			</label>
+			<div class="accordion-inner" ng-show="mode=='edit'">
+				<div class="">
+					<label class="checkbox">
+						<input id="view_passport_data" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="myrestrict.view_passport_data" ng-change="save_restrict()"/>
+						Разрешить видеть информацию из паспорта руководителю проекта
+					</label>
+				</div>
 			</div>
 		</div>
 	</div>
