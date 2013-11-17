@@ -26,6 +26,7 @@ sub save {
 		$place->updated(time);
 		$place->lattitude($param->{lattitude});
 		$place->longtitude($param->{longtitude});
+		$place->name($param->{name});
 		$place->update();
     }
 	else {
@@ -34,6 +35,7 @@ sub save {
             updated     => time,
             lattitude   => $param->{lattitude},
             longtitude  => $param->{longtitude},
+			name        => $param->{name}
         });
         $model->resultset('PlaceProject')->create({
             place_id    => $place->id,

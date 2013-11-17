@@ -6,9 +6,9 @@
 	
 		<ul class="nav">
 			<li ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item,this)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
-				Название: {{item.marker.getTitle()}}<br/>
-				Ш: {{item.marker.getPosition().lat()}}<br/>
-				Д: {{item.marker.getPosition().lng()}}
+				Название: {{item.name}}<br/>
+				Ш: {{item.lat}}<br/>
+				Д: {{item.lng}}
 			</li>
 		</ul>
 	</div>
@@ -17,9 +17,9 @@
 		<br/><br/>
 		<div ng-repeat="item in markers" class="alert alert-info" ng-click="markMarker(item)" ng-mouseover="markMarker(item)" ng-mouseleave="unmarkMarker(item)">
 			<button type="button" class="close" data-dismiss="alert" ng-click="removeMarker(item)">&times;</button>
-			<div class="" >Название: <span ng-bind="item.marker.getTitle()"></span></div>
-			<div class="" >Ш:<span ng-bind="item.marker.getPosition().lat()"></span></div>
-			<div class="" >Д:<span ng-bind="item.marker.getPosition().lng()"></span></div>			
+			<div class="" >Название: <span ng-bind="item.name"></span></div>
+			<div class="" >Ш:<span ng-bind="item.lat"></span></div>
+			<div class="" >Д:<span ng-bind="item.lng"></span></div>			
 		</div>
 	</div>
 </section>

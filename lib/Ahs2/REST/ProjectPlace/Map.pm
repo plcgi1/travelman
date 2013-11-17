@@ -19,6 +19,7 @@ my $map = [
 				{ name => 'location_id',         rules => [ {rule => 'integer' } ], error => "Bad location_id" },
 				{ name => 'lattitude',  rules => [ {rule => 'float', } ], required => 1, error => "Bad lattitude" },
 				{ name => 'longtitude', rules => [ {rule => 'float', } ], required => 1, error => "Bad longtitude" },
+				{ name => 'name', rules => [ {rule => 'anyText', } ], required => 1, error => "Bad name" },
             ]
         },
         # service output description

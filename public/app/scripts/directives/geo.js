@@ -37,7 +37,6 @@
 				});
 
 				function openInfoWindow(obj) {
-					//console.log(obj.getPosition().lat());
 					if (!obj.marker) {
 						var center = $scope.map.getCenter();
 						obj.marker = new google.maps.Marker({
@@ -64,7 +63,7 @@
 					infoWindow.open($scope.map, obj.marker);
 				}
 
-				function addMarker(location, id) {
+				function addMarker(location, id, name) {
 					var marker = new google.maps.Marker({
 						position: location,
 						map: $scope.map,
@@ -72,13 +71,18 @@
 						clickable: true
 					});
 
+					marker.setTitle(name);
 					$scope.markers.push({
 						marker: marker,
-						id: id
+						id: id,
+						name: marker.getTitle(),
+						lat: marker.getPosition().lat(),
+						lng: marker.getPosition().lng()
 					});
 
 					if ($scope.mode === 'edit') {
 						marker.setDraggable(true);
+
 						google.maps.event.addDomListener(marker, 'click', function(evt) {
 							infoWindow.setPosition(location);
 							$scope.openInfoWindow({
@@ -90,6 +94,7 @@
 							$scope.currentMarker = {
 								lat: evt.latLng.lb,
 								lng: evt.latLng.mb,
+								name : marker.getTitle(),
 								id: id
 							};
 							$scope.openInfoWindow({
@@ -107,8 +112,7 @@
 				function placeMarkers(markers) {
 					for (var i = 0; i < markers.length; i++) {
 						var location = new google.maps.LatLng(markers[i].lattitude, markers[i].longtitude, $scope.map);
-
-						addMarker(location, markers[i].id);
+						addMarker(location, markers[i].id, markers[i].name);
 					}
 					if (markers.length > 0) {
 						$scope.map.setCenter(new google.maps.LatLng(markers[0].lattitude, markers[0].longtitude, $scope.map));
@@ -142,20 +146,33 @@
 				}
 
 				function unmarkMarker(marker) {
-					marker.marker.setAnimation(null);
-					
+					marker.marker.setAnimation(null);					
 				}
 
 				function saveGeo() {
-					ProjectGeo.save({
-						id: $scope.project.id,
-						lattitude: $scope.currentMarker.lat,
-						longtitude: $scope.currentMarker.lng,
-						name: $scope.currentMarker.name,
-						location_id: $scope.currentMarker.id
-					}, function() {
-						infoWindow.close();
-					});
+					var arr = [];
+
+					for (var i = 0; i < $scope.markers.length; i++) {
+						var m = $scope.markers[i].marker;
+						arr.push($scope.markers[i]);
+						if ( $scope.markers[i].id === $scope.currentMarker.id ) {
+							$scope.markers[i].name 			= $scope.currentMarker.name;
+							$scope.markers[i].lat 	= $scope.currentMarker.lat;
+							$scope.markers[i].lng 	= $scope.currentMarker.lng;
+							
+							ProjectGeo.save({
+								id: 		$scope.project.id,
+								lattitude: 	m.getPosition().lat(),
+								longtitude: m.getPosition().lng(),
+								name: 		$scope.currentMarker.name,
+								location_id: $scope.currentMarker.id
+							});
+							
+							infoWindow.close();
+						}
+					}
+					$scope.markers = arr;
+					
 				}
 
 				$scope.placeMarkers = placeMarkers;
@@ -165,7 +182,6 @@
 				$scope.markMarker = markMarker;
 				$scope.unmarkMarker = unmarkMarker;
 				$scope.saveGeo = saveGeo;
-				$scope.aa = ['AA'];
 			},
 			link: function($scope, $element, $attr, $ctrl) {
 				$scope.mode = Mode.get($attr);
