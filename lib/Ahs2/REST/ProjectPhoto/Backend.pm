@@ -2,6 +2,7 @@ package Ahs2::REST::ProjectPhoto::Backend;
 use common::sense;
 use base 'Ahs2::Component::Upload::Backend';
 use Data::Dumper;
+use Dir::Iterate;
 
 sub save {
     my ( $self, $param ) = @_;
@@ -31,11 +32,9 @@ sub get {
     
     my $web_path = $config->{static}->{project_profile_path}.'/'.$param->{id};
     
-    my $full_path = $config->{app_root}.'/public/'.$web_path;
-    
-    opendir D,$full_path;
-    my @f = readdir D;
-    closedir D;
+    my $full_path = $config->{app_root}.'/public'.$web_path;
+    my @f = mapdir { (split '/')[-1] } $full_path;
+	
     my $fname ;
     my $thumb;
     

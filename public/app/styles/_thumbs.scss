@@ -52,7 +52,7 @@
   font-size: 13pt;
   font-style: italic;
 }
-.box .cover .intro{
+/*.box .cover .intro{
   line-height: 1.2em;
   padding: 2x;
   height: 4.8em;
@@ -62,25 +62,24 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}*/
+.cover .carousel-control {
+	position: absolute;
+	float: right;
+	top: 230px;
+	left: 210px;
+	font-size: 15px;
+	font-weight: 100;
+	width: 30px;
+	height: 30px;
+	text-decoration: none;  
 }
-.cover .btn{
-  padding: 0.5em 1em;
-  margin: 0.5em;
-  background: #0099cc;
-  float: right;
-  border-radius: 0.25em;
-  position: relative;
-  bottom: 0;
-  top: 30%;
-  left: -10%;
-}
-.btn a{
+
+.cover .carousel-control i{
   color: #fff;
-  text-decoration: none;
-  
+  text-decoration: none;  
 }
 .cover .date{
-  //position: absolute;
   bottom: 1em;
   right: 1em;
   font-size: 10pt;
@@ -125,7 +124,7 @@
   left: -250px;
 }
 .right{
-  right: -250px;
+  //right: -250px;
 }
 .top{
   top: -200px;

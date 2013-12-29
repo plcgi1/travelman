@@ -1,3 +1,88 @@
+use inc::Module::Install;
+
+# Define metadata
+name 'WOA';
+abstract 'web oriented toolkit for easy building REST services';
+version '0.001';
+author 'plcgi1@gmail.com';
+license 'perl';
+perl_version('5.10.1');
+
+# Specific dependencies
+requires 'CGI::Cookie'		=> '0';
+requires 'Module::Install'	=> '0';
+requires 'Try'		        => '0';
+requires 'Starman'          => '0';
+requires 'Plack'			=> '1.0029';
+requires 'DateTime' 	=> '0';
+requires 'Time::Local' 	=> 0;
+
+requires 'Dir::Iterate' => 0;
+requires 'Digest::SHA1'	=> '0';
+requires 'Digest::MD5'	=> '0';
+requires 'MIME::Types'	=> '0';
+requires 'Image::Resize'=> '0';
+requires 'Imager'		=> '0';
+
+requires 'Text::Xslate' => '0';
+requires 'Text::Xslate::Bridge::TT2' => '0';
+		
+requires 'Plack::Middleware::Auth::AccessToken' => '0',
+requires 'Plack::Middleware::Session' => '0',
+requires 'Plack::Middleware::Log4perl' => '0',
+requires 'Plack::Middleware::Static' => '0',
+requires 'Plack::Middleware::AccessLog' => '0',
+requires 'Plack::Middleware::ContentMD5' => '0',
+requires 'Plack::Middleware::OAuth' => '0',
+		
+requires 'Carp';
+requires 'Error'          => 0.17010;
+requires 'File::Basename' => 2.77;
+requires 'MIME::Base64'   => 3.08;
+requires 'Mail::Mailer'   => 2.06;
+requires 'Template'       => 2.22;
+
+requires 'Config::General';
+requires 'Config::Any';
+
+requires 'File::Find'; 
+requires 'Class::Accessor::Fast' => 0.31;
+requires 'Class::Singleton';
+requires 'Class::Inspector' => 1.25;
+
+requires 'Encode::Guess' => 2.03;
+requires 'POSIX'         => 1.17;
+
+requires 'Test::Strict';
+requires 'Test::Pod';
+requires 'Test::Builder';
+requires 'Test::Builder::Module';
+
+requires 'Getopt::Long' => 2.38;
+requires 'Pod::Usage'   => 1.36;
+
+requires 'JSON::XS' => 2.3;
+requires 'Data::Dumper';
+
+requires 'Exception::Class';
+
+requires 'URI::Escape'   => 3.30;
+requires 'interface'     => 0.03;
+requires 'Date::Manip'   => 6.22;
+requires 'base'          => 2.14;
+requires 'common::sense' => 3.4;
+requires 'parent'        => 0.225;
+requires 'Locale::Maketext';
+requires 'HTTP::Request::AsCGI';
+
+auto_install;
+
+WriteAll;
+
+1;
+
+__END__
+
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
@@ -8,6 +93,7 @@ WriteMakefile(
     AUTHOR    => 'Nosoff Alex',
     EXE_FILES => ['psgi/Ahs2.psgi'],
     PREREQ_PM => {
+		'CGI::Cookie'	=> '0',
         'Module::Install'            => '0',
         'Try'		                 => '0',
         'Starman'                  => '0',
@@ -66,7 +152,7 @@ WriteMakefile(
 		
 		'DBIx::Class' => '0',
 		'DBD::mysql' => '0',
-		
+		'DBI'        => '0',
 		'Cache::FastMmap' => '0',
 		
 		'Class::Declare' => '0',
@@ -76,86 +162,5 @@ WriteMakefile(
     },
     test => {TESTS => 't/*.t'}
 );
-
-#use inc::Module::Install;
-#
-## Define metadata
-#name 'WOA';
-#abstract 'Alpine human register REST services';
-#version '0.001';
-#author 'plcgi1@gmail.com';
-#license 'perl';
-#perl_version('5.14');
-#
-## Specific dependencies
-#requires 'Module::Install';
-#requires 'Try';
-#requires 'Plack';
-#requires 'Plack::Middleware::Session';
-#requires 'Plack::Middleware::Log4perl';
-#requires 'Plack::Middleware::Static';
-#requires 'Plack::Middleware::AccessLog';
-#requires 'Plack::Middleware::ContentMD5';
-#
-#requires 'JavaScript::Value::Escape';
-#requires 'Carp';
-#requires 'Error'          => 0.17010;
-#requires 'File::Basename' => 2.77;
-#requires 'MIME::Base64'   => 3.08;
-#requires 'Mail::Mailer'   => 2.06;
-#requires 'Text::Xslate';
-#requires 'Text::Xslate::Bridge::TT2';
-#requires 'Config::General';
-#requires 'Config::Any';
-#
-#requires 'File::Find'; 
-#requires 'Class::Accessor::Fast' => 0.31;
-#requires 'Class::Singleton';
-#requires 'Class::Inspector' => 1.25;
-#
-#requires 'Encode::Guess' => 2.03;
-#requires 'POSIX'         => 1.17;
-#
-#requires 'Test::Strict';
-#requires 'Test::Pod';
-#requires 'Test::Builder';
-#requires 'Test::Builder::Module';
-#requires 'Digest::HMAC_SHA1';
-#requires 'Digest::SHA1';
-#
-#requires 'Getopt::Long' => 2.38;
-#requires 'Pod::Usage'   => 1.36;
-#
-#requires 'JSON::XS' => 2.3;
-#requires 'Data::Dumper';
-#
-#requires 'Exception::Class';
-#
-#requires 'URI::Escape'   => 3.30;
-#requires 'interface'     => 0.03;
-#requires 'Date::Manip'   => 6.22;
-#requires 'base'          => 2.14;
-#requires 'common::sense' => 3.4;
-#requires 'parent'        => 0.225;
-#requires 'Locale::Maketext';
-#requires 'HTTP::Request::AsCGI';
-#requires 'HTTP::Exception';
-#
-#requires 'DBIx::Class';
-#requires 'DBD::mysql';
-#
-#requires 'Cache::FastMmap';
-#
-#requires 'Class::Declare';
-#requires 'Log::Log4perl';
-#requires 'Log::Dispatch::FileRotate';
-#
-#requires 'Plack::Middleware::Auth::AccessToken';
-#
-#install_script glob('bin/*.pl');
-#
-#auto_install;
-#
-#WriteAll;
 
 1;

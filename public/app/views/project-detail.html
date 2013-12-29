@@ -3,40 +3,23 @@
   <li class="active" ng-bind="project.name"></li>
 </ul>
 
-
 <div ng-controller="ProjectCtrl">
-   
-  <div class="btn-toolbar">
-	<div class="btn-group pinned">
-	  <a class="btn" ng-show="user.loginStatus==1 && project.can_edit==1" ng-disabled="mode=='view'" ng-click="setMode('view')" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Просмотр</a>
-	  <a class="btn show4logged" ng-show="user.loginStatus==1 && project.can_edit==1" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
-	</div>
-  </div>
- 
+  
+	<span class="span12">
+		<span class="btn-group pinned">
+			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='pulse'" href="#/projects/project/{{project.id}}/pulse"><i class=" icon icon-camera"></i>&nbsp;Пульс проекта</a>
+			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='view'" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Карточка проекта</a>			
+		</span>
+		<span class="btn-group pinned pull-right">
+			<a class="btn show4logged" ng-show="user.loginStatus==1 && project.can_edit==1 && project.id!='new'" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
+		</span>	
+	</span>
+	
   <div class="accordion" id="accordion2">
+	
 	<div class="accordion-group">
 	  <div class="accordion-heading">
-		<center><h4>Данные</h4></center>
-	  </div>
-	  <div id="info" class="accordion-body collapse in">
-		<div class="accordion-inner">
-			<div ng-show="mode=='view'">
-				<h5>{{project.name}}</h5>
-			</div>
-			<div ng-show="mode=='edit'">
-				<div class="control-group">
-					<span>Заголовок проекта</span>
-					<div>
-					  <input type="text" class="input-medium span10" ng-model="project.name" name="name" id="project-name" enter-submit='save("ProjectInfo")' required/>
-					</div>
-				</div>
-			</div>
-		</div>
-	  </div>
-	</div>
-	<div class="accordion-group">
-	  <div class="accordion-heading">
-		<center><h4>Дата проекта</h4></center>
+		<center><h5>Дата проекта</h5></center>
 	  </div>
 	  <div id="info" class="accordion-body collapse in">
 		<div class="accordion-inner">
@@ -61,19 +44,37 @@
 							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 						</div>
 					</span>
-					<a class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-check"></i>&nbsp;Сохранить</a>  
+					<a ng-show="project.id!='new'" class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-check"></i>&nbsp;Сохранить</a>  
 				</div>
 				
 			</div>
 		</div>
 	  </div>
 	</div>
+	
 	<div class="accordion-group">
 	  <div class="accordion-heading">
-		<center><h4>
-		  Фото проекта
-		</h4>
-		  </center>
+		<center><h5>Краткое описание</h5></center>
+	  </div>
+	  <div id="info" class="accordion-body collapse in">
+		<div class="accordion-inner">
+			<div ng-show="mode=='view'">
+				<h4>{{project.name}}</h4>
+			</div>
+			<div ng-show="mode=='edit'">
+				<div class="control-group">
+					<div>
+					  <input type="text" class="input-medium span10" ng-model="project.name" name="name" id="project-name" enter-submit='save("ProjectInfo",project)' required/>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="accordion-group" ng-show="project.id!='new'">
+	  <div class="accordion-heading">
+		<center><h5> Фото проекта</h5> </center>
 	  </div>
 	  <div id="info" class="accordion-body collapse in">
 		<div class="accordion-inner">
@@ -97,10 +98,7 @@
 	
 	<div class="accordion-group" ng-show="project.id!='new'">
 	  <div class="accordion-heading">
-		<center><h4>
-		  Цели
-		</h4>
-		  </center>
+		<center><h5> Цели</h5></center>
 	  </div>
 	  <div id="goals" class="accordion-body collapse in">
 		<div class="accordion-inner">
@@ -110,9 +108,9 @@
 	</div>
 	<div class="accordion-group" ng-show="project.id!='new'">
 	  <div class="accordion-heading">
-		<center><h4>
+		<center><h5>
 		  Участники
-		</h4></center>
+		</h5></center>
 	  </div>
 	  <div id="participants" class="accordion-body collapse in">
 		<div class="accordion-inner">
@@ -122,9 +120,9 @@
 	</div>
 	<div class="accordion-group" ng-show="project.id!='new'">
 	  <div class="accordion-heading" >
-		<h4>
+		<h5>
 		  <center>Местоположение</center>		  
-		</h4>
+		</h5>
 	  </div>
 	  <div id="place" class="accordion-body collapse in">
 		<div class="accordion-inner">

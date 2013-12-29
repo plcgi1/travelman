@@ -22,6 +22,10 @@ app
             .when('/projects', {
               templateUrl: 'views/projects.html'
             })
+			.when('/projects/project/:project_id/pulse', {
+              templateUrl: 'views/pulse.html',
+              controller: 'PulseCtrl'
+            })
             .when('/projects/project/:project_id/:mode', {
               templateUrl: 'views/project-detail.html',
               controller: 'ProjectCtrl'
@@ -59,7 +63,6 @@ app
             
                     function error(response) {
                         var status = response.status;
-                       
                         if (status === 401) {
                             window.location = './401.html';
                             return;
@@ -68,7 +71,7 @@ app
                         var arr = [];
                         
                         for (var item in response.data) {
-                             arr.push('<div class="alert alert-error">'+response.data[item].error+'</div>');
+                            arr.push('<div class="alert alert-error">'+response.data[item].error+'</div>');
                         }
                         $('#alert').html(arr.join(''));
                         // otherwise

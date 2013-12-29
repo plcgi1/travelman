@@ -91,7 +91,8 @@ sub login_via_provider {
     my $config  = $self->get_config;
     my $session = $self->get_session();
     my $res;
-	if ( $session->{user}) {
+	
+	if ( $session->{user} && int(keys %{$session->{user}} )>0 ) {
 		$res = { location => '/app/index.html'  };
 	}
 	else {
@@ -100,6 +101,7 @@ sub login_via_provider {
 				'me.email'       => $param->{email}
 			},
 		);
+		
 		if ( $user ) {
 			$user->actions('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]');
 			$user->updated(time);

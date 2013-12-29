@@ -1,4 +1,4 @@
-	(function(){
+(function(){
 'use strict';
 var app = window.app;
 app.controllers
@@ -21,7 +21,7 @@ app.controllers
         function save(action,data) {
 			$scope.project.from = $filter('date')($scope.project.from,'yyyy-MM-dd');
 			$scope.project.to = $filter('date')($scope.project.to,'yyyy-MM-dd');
-			
+
             map[action].save($scope.project,function(data){
                 data = data[0];
                 if (!(data.goals && data.goals.length>0)) {

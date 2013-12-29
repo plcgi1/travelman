@@ -183,8 +183,9 @@ sub _get_for_new {
     $res->{can_edit}= 1;
     $res->{goals}   = [];
     $res->{geo}     = [];
-    $res->{from}    = "";
-    $res->{to}      = "";
+	# костыль для того чтоб на странице эти даты при создании были установлены
+    $res->{from}    = $formatter->format_ts_ymd(time);
+    $res->{to}      = $formatter->format_ts_ymd(time);
     $res->{name}    = "";
     $res->{id}      = "new";
     
