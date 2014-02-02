@@ -36,7 +36,7 @@ my $map = [
         func_name => 'get',
         # unique name for service - used in javascript validator rules
         name      => 'PRJ_PARTICIPANT_GET',
-        
+        public => 1,
         in        => {
             skip_from_uri => 1,
             param         => [

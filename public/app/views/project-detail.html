@@ -7,11 +7,20 @@
   
 	<span class="span12">
 		<span class="btn-group pinned">
-			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='pulse'" href="#/projects/project/{{project.id}}/pulse"><i class=" icon icon-camera"></i>&nbsp;Пульс проекта</a>
-			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='view'" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Карточка проекта</a>			
+			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='pulse'" href="#/projects/project/{{project.id}}/pulse">
+				<i class=" icon icon-camera"></i>
+				&nbsp;Пульс проекта
+			</a>
+			<a class="btn" ng-show="project.id!='new'" ng-disabled="mode=='view'" href="#/projects/project/{{project.id}}/view">
+				<i class="icon icon-eye-open"></i>
+				&nbsp;Карточка проекта
+			</a>			
 		</span>
 		<span class="btn-group pinned pull-right">
-			<a class="btn show4logged" ng-show="user.loginStatus==1 && project.can_edit==1 && project.id!='new'" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-edit"></i>&nbsp;Изменение</a>
+			<a class="btn show4logged" ng-show="user.loginStatus==1 && project.can_edit==1 && project.id!='new'" ng-disabled="mode=='edit'" ng-click="setMode('edit')" href="#/projects/project/{{project.id}}/edit">
+				<i class=" icon icon-edit"></i>
+				&nbsp;Изменение
+			</a>
 		</span>	
 	</span>
 	
@@ -44,7 +53,10 @@
 							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 						</div>
 					</span>
-					<a ng-show="project.id!='new'" class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit"><i class=" icon icon-check"></i>&nbsp;Сохранить</a>  
+					<a ng-show="project.id!='new'" class="btn pull-right save" ng-show="mode=='edit'" ng-click="save('ProjectInfo')" href="#/projects/project/{{project.id}}/edit">
+						<i class=" icon icon-check"></i>
+						&nbsp;Сохранить
+					</a>  
 				</div>
 				
 			</div>

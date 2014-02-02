@@ -9,7 +9,7 @@ my $map = [
         func_name => 'login',
         # unique name for service - used in javascript validator rules
         name      => 'LOGIN',
-        
+        public => 1,
         in        => {
             skip_from_uri => 1,
             param         => [
@@ -35,7 +35,7 @@ my $map = [
         func_name => 'isauth',
         # unique name for service - used in javascript validator rules
         name      => 'ISAUTH',
-        
+        public => 1,
         in        => {
             skip_from_uri => 1,
             param         => [

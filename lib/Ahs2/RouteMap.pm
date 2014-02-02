@@ -11,6 +11,8 @@ my $rules = [
     
     { path => '/ahs/auth', class => 'Ahs2::REST::Auth::SP' },
     
+    { path => '/ahs/projects/project/pulse$', class => 'Ahs2::REST::Pulse::SP' },
+    
     { path => '/ahs/projects/project/goals$', class => 'Ahs2::REST::ProjectGoals::SP' },
     
     { path => '/ahs/projects/project/photo$', class => 'Ahs2::REST::ProjectPhoto::SP' },
@@ -24,8 +26,8 @@ my $rules = [
     { path => '/ahs/projects/project/participants$', class => 'Ahs2::REST::ProjectParticipants::SP' },
     
     { path => '/ahs/settings/mydata$', class => 'Ahs2::REST::Settings::SP' },
-	
-	{ path => '/ahs/settings/myrestrict$', class => 'Ahs2::REST::Settings::SP' },
+    
+    { path => '/ahs/settings/myrestrict$', class => 'Ahs2::REST::Settings::SP' },
     
     { path => '/ahs/user/info', class => 'Ahs2::REST::UserInfo::SP' },
     

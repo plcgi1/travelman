@@ -47,4 +47,17 @@
 			}
 		});
 	});
+	// /ahs/projects/project/pulse
+	app.services.factory('ProjectPulse', function($resource) {
+		return $resource('/ahs/projects/project/pulse', {}, {
+			save: {
+				method: 'POST',
+				isArray: true
+			},
+			query: {
+				method: 'GET',
+				isArray: true
+			}
+		});
+	});
 })();

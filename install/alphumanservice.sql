@@ -71,6 +71,8 @@ INSERT INTO `action` VALUES (1,'NEW_PROJECT','Новый проект','/part-fo
 	(22,'REST_CONFIRM','','/ahs/part-form/confirm','[\"GET\",\"POST\",\"DELETE\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL),
 	(23,'REST_MYDATA','','/ahs/settings/mydata','[\"GET\",\"POST\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL),
 	(24,'REST_MYPASSWORD','','/ahs/settings/password','[\"POST\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL);
+	
+	(25,'REST_PROJECTS','','/ahs/projects','[\"GET\"]',1358105448,1358105448,'rest',0,NULL,0,1,NULL);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 

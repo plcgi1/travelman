@@ -156,15 +156,15 @@
 						var m = $scope.markers[i].marker;
 						arr.push($scope.markers[i]);
 						if ( $scope.markers[i].id === $scope.currentMarker.id ) {
-							$scope.markers[i].name 			= $scope.currentMarker.name;
-							$scope.markers[i].lat 	= $scope.currentMarker.lat;
-							$scope.markers[i].lng 	= $scope.currentMarker.lng;
+							$scope.markers[i].name	= $scope.currentMarker.name;
+							$scope.markers[i].lat	= $scope.currentMarker.lat;
+							$scope.markers[i].lng	= $scope.currentMarker.lng;
 							
 							ProjectGeo.save({
-								id: 		$scope.project.id,
-								lattitude: 	m.getPosition().lat(),
+								id:			$scope.project.id,
+								lattitude:	m.getPosition().lat(),
 								longtitude: m.getPosition().lng(),
-								name: 		$scope.currentMarker.name,
+								name:		$scope.currentMarker.name,
 								location_id: $scope.currentMarker.id
 							});
 							

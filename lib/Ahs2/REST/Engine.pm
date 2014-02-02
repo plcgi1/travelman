@@ -9,7 +9,7 @@ __PACKAGE__->mk_accessors(qw/model session formatter config logger res/);
 
 my $BAD_STATUS_MAP = {
     400 => '[WOA] Bad request',
-    401 => '[WOA] Forbidden',
+    401 => { "message" => "Forbidden" },
     404 => '[WOA] Not found'
 };
 
@@ -95,11 +95,14 @@ sub check_access {
     }
     my $path = $request->request_uri;
     my $access  = 0;
+	if ( $path =~/(index\.html)$/ ) {
+		return 1;
+	}
     if ( $request->method =~ /get|delete|post|put/i ) {
         $path = ( split '\?', $path )[0];
     }
 	
-	return 1;
+	#return 1;
     if ( $user_data && ref $user_data eq 'HASH' && $user_data->{user} ) {
         my $acl     = $user_data->{acl};
         my $rest    = $user_data->{rest};
@@ -191,7 +194,7 @@ sub set_error {
     my $fmt = $self->formatter();
     $msg = $fmt->encode_utf($msg);
     my $session = $self->backend->{'session'};
-    my $config = $self->backend->get_config;
+    my $config  = $self->backend->get_config;
     
     my $user = $session->{'user'};
     if ( ref $message_data eq 'WOA::Validator::ErrorCode' ) {
@@ -215,9 +218,10 @@ sub set_error {
             $self->output($out);
         }
         else {
-            $self->status(303);
-            $session->{redirected} = 1;
-            $self->location($config->{default}->{401});
+            $self->status(401);
+			
+            #$session->{redirected} = 1;
+            #$self->location($config->{default}->{401});
         }
     }
     
@@ -243,6 +247,9 @@ sub set_error {
     }
     else {
         if ( $BAD_STATUS_MAP->{$http_status} ) {
+			my $out = $self->view->as_json($BAD_STATUS_MAP->{$http_status});
+			$self->output($out);
+			$self->content_type("application/json");
             $self->error_message($msg);
         }
     }

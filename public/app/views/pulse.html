@@ -5,113 +5,33 @@
 <div ng-controller="PulseCtrl">
 	<div class="btn-toolbar">
 		<span class="btn-group pinned">
-			<a class="btn" ng-disabled="1" href="#/projects/project/{{project.id}}/pulse"><i class=" icon icon-camera"></i>&nbsp;Пульс проекта</a>
-			<a class="btn" ng-disabled="mode=='view'" href="#/projects/project/{{project.id}}/view"><i class="icon icon-eye-open"></i>&nbsp;Карточка проекта</a>			
+			<a class="btn" ng-disabled="1" href="#/projects/project/{{project.id}}/pulse">
+				<i class=" icon icon-camera"></i>
+				&nbsp;Пульс проекта
+			</a>
+			<a class="btn" ng-disabled="mode=='view'" href="#/projects/project/{{project.id}}/view">
+				<i class="icon icon-eye-open"></i>
+				&nbsp;Карточка проекта
+			</a>			
 		</span>
 	</div>	
 	<ul class="media-list">
-		<li class="media">
+		<li class="media" ng-repeat="item in pulse">
 			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
+				<img class="media-object img-circle" ng-src="/img/users/{{item.login}}/{{item.filename}}" width="64" height="64">
 			</a>
-			<span>chief</span>
+			<span>{{item.login}}</span>
 			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
+			<span>{{item.updated}}</span>
 			<div class="media-body">
 				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>Молодой человек лет тридцати тихо шел по аллее в старом городском парке, опустив голову, глубоко погруженный в свои мысли<br>
-				Ему не везло уже не первый год - неприятности подстерегали его во всех делах, которые он пытался реализовать</p>
+				<p ng-bind-html-unsafe="item.description"></p>
 			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>То взял в долг на стопроцентное дело - и оно полностью прогорело<br/>
-				То собрался переплыть озеро - и чуть не утонул - спасибо спасателям, которые оказались недалеко
-				</p>
-			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>А тут еще и развод - тоже неприятное для молодого человека событие, изза которого мысли о самоубийстве стали посещать его время от времени<br>
-				Так он и брел по старому парку, выдумывая способы своего самоубийства
-				</p>
-			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>Аллея вела его прямо - фонари слабо горели и тут наш герой заметил краем глаза какоето движение впереди.
-				<br>
-				Вполне возможно, что это было просто игра света и тени - не суть - но просто оно отвлекло нашего героя на какоето время
-				</p>
-			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>Он ускорил шаг к тому месту, где заметил движение, и заметил по деревом темный предмет<br>
-				Темный предмет оказался кошельком, но не простым - а таким старинным - как небольшой мешочек с вышивкой и перевязанный красивым плетеным шнурком
-				<br>
-				Молодой человек поднял кошелек и пошел к свету - чтобы подробней рассмотреть находку
-				</p>
-			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>Странная вышивка ничего не говорила нашему герою - вышивка как вышивка - ничего интересного для обычного человека - которому долгое время невезло в жизни
-				</p>
-			</div>
-		</li>
-		
-		<li class="media">
-			<a class="pull-left" href="#">
-				<img class="media-object" src="/images/no-photo.gif" width="64" height="64">
-			</a>
-			<span>chief</span>
-			<span><i class="icon-user"></i></span>
-			<span>2013-01-01</span>
-			<div class="media-body">
-				<!--<h4 class="media-heading">Media heading</h4>-->
-				<p>В мешочке оказался браслет из деревянных бусен<br/>Герой одел его на руку - и тут началось...</p>
-			</div>
-		</li>
+		</li>		
 	</ul>
+	<div ng-show="user.loginStatus==1">
+		<plcgi-nicedit class="textarea" id="descr" ng-model="description" />
+		
+	</div>
+	<a ng-show="user.loginStatus==1" class="btn save" ng-click="save()" ><i class=" icon icon-check"></i>&nbsp;Сохранить</a>
 </div>

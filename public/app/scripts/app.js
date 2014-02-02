@@ -1,10 +1,10 @@
 ;(function(){
 'use strict';
 window.app = angular.module('AhsApp', [
-  'plcgi.navbar','plcgi.list','plcgi.dropdown','plcgi.mode',
+  'plcgi.navbar','plcgi.list','plcgi.dropdown','plcgi.mode','plcgi.toolkit',
   'ahs.services','ahs.controllers','ahs.directives','plcgi.eventbus'
 ]);
-app.services    = angular.module('ahs.services', ['ngResource']);
+app.services    = angular.module('ahs.services', ['ngResource','ngSanitize']);
 app.controllers = angular.module('ahs.controllers', ['ahs.services','$strap.directives']);
 app.directives  = angular.module('ahs.directives', ['plcgi.mode','ahs.services']);
 
@@ -63,10 +63,10 @@ app
             
                     function error(response) {
                         var status = response.status;
-                        if (status === 401) {
-                            window.location = './401.html';
-                            return;
-                        }
+                        //if (status === 401) {
+                        //    window.location = './401.html';
+                        //    return;
+                        //}
                         var res = $('#alert');
                         var arr = [];
                         

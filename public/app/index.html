@@ -12,10 +12,13 @@
       
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/main.css -->
+	
     <link rel="stylesheet" href="styles/main.css">
     <!--<link rel="stylesheet" href="styles/magic.css">-->
     <link rel="stylesheet" href="components/bootstrap-datepicker/css/datepicker.css">
-   
+	<!--<link rel="stylesheet" href="components/ng-ckeditor/ng-ckeditor.css">-->
+	<!--<link rel="stylesheet" href="components/bootstrap-wysihtml5/lib/css/wysiwyg-color.css">
+	<link rel="stylesheet" href="components/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css">-->
     <!-- endbuild -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
   </head>
@@ -55,19 +58,23 @@
     
     <!-- build:js scripts/scripts.js -->  
     
-    <script src="components/jquery/jquery.js"></script>  
+    <script src="components/jquery/jquery.js"></script>
+	<script src="components/jquery/jquery-migrate.js"></script>  
     <script src="components/angular.js-master/build/angular.js"></script>
     <script src="components/angular.js-master/build/angular-resource.js"></script>
+	<script src="components/angular.js-master/build/angular-sanitize.js"></script>
     <script src="components/bootstrap/js/bootstrap-dropdown.js"></script>
 	<script src="components/bootstrap/js/bootstrap-collapse.js"></script>
     <script src="components/bootstrap/js/bootstrap-transition.js"></script>
     <script src="components/bootstrap/js/bootstrap-alert.js"></script>
-	<script src="components/bootstrap/js/bootstrap-carousel.js"></script>
+	<script src="components/bootstrap/js/bootstrap-modal.js"></script>
+	<script src="components/bootstrap/js/bootstrap-button.js"></script>
 	<script src="components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="components/fileuploader/fileuploader.js"></script>
-    <script src="components/angular-imageupload-directive/public/javascripts/imageupload.js"></script>
     <script src="components/angular-strap/dist/angular-strap.js"></script>
-    
+	<script src="components/nicedit/nicEdit.js"></script>
+	
+	<script src="components/plcgi/nicedit-directive.js"></script>
     <script src="components/plcgi/eventbus.js"></script>
     <script src="components/plcgi/navbar.js"></script>
     <script src="components/plcgi/list.js"></script>

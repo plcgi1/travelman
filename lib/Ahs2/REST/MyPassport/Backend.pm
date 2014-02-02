@@ -15,6 +15,21 @@ sub save {
     my $user = $model->resultset('PassportData')->search(
         { user_id => $session->{user}->{id} },
     )->single();
+	unless ( $user ) {
+		$user = $model->resultset('PassportData')->create({
+			user_id 			=> $session->{user}->{id},
+			updated 			=> time,
+			"serial" 			=> $param->{serial},
+			"number" 			=> $param->{number},	
+			"received" 			=> \"UNIX_TIMESTAMP('$param->{received}')",
+			"place" 			=> $param->{place},
+			"latin_fname" 		=> $param->{latin_fname},
+			"latin_lname" 		=> $param->{latin_lname},
+			"place" 			=> $param->{org},
+			"date_of_birth" 	=> \"UNIX_TIMESTAMP('$param->{dob}')",
+			"place_of_birth" 	=> $param->{pob}
+		});
+	}
     my $is_edit;
     foreach ( keys %$param ) {
         if ( $param->{$_} && $param->{$_} ne $user->get_column($_) ) {

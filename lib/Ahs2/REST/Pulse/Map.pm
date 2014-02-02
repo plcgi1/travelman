@@ -1,21 +1,54 @@
-package Ahs2::REST::Project::Map;
+package Ahs2::REST::Pulse::Map;
 use strict;
 
 my $map = [
     {
         # regexp or absolute value for url to service
-        regexp    => '/ahs/projects$',
+        regexp    => '/ahs/projects/project/pulse$',
+        # func name in Backend module
+        func_name => 'save',
+        # unique name for service - used in javascript validator rules
+        name      => 'SAVE_PULSE_ITEM',
+        
+        in        => {
+            skip_from_uri => 1,
+            param         => [
+                # some patterns to define field names and validation rules
+                # all rule names - in WOA::Validator::Rules::Base
+				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
+				{ name => 'project_id', rules => [ {rule => 'integer' } ], required => 1, error => "Bad project_id" },
+				{ name => 'description',rules => [ {rule => 'allSymbols'} ], required => 1,  error => "Bad description" },
+            ]
+        },
+        # service output description
+        out			=>	{
+            mime_type => 'text/javascript',
+            # methods from View - you can implement your own
+            view_method => 'as_json'
+        },
+        
+        # maybe POST GET PUT DELETE
+        req_method => 'POST'
+    },
+	{
+        # regexp or absolute value for url to service
+        regexp    => '/ahs/projects/project/pulse$',
         # func name in Backend module
         func_name => 'get',
         # unique name for service - used in javascript validator rules
-        name      => 'PRJ_GET',
+        name      => 'GET_PULSE_ITEM',
         public => 1,
         in        => {
             skip_from_uri => 1,
             param         => [
                 # some patterns to define field names and validation rules
                 # all rule names - in WOA::Validator::Rules::Base
-				{ name => 'id',         rules => [ {rule => 'pattern', param => '^(\d+|new)$' } ], error => "Bad id" },
+				{ name => 'id',         rules => [ {rule => 'integer' } ], error => "Bad id" },
+				{ name => 'project_id', rules => [ {rule => 'integer' } ], required => 1, error => "Bad project_id" },
+				{ name => 'limit',		rules => [ {rule => 'integer' } ], error => "Bad limit" },
+				{ name => 'sord',		rules => [ {rule => 'pattern', param => '^()$' } ], error => "Bad sorder" },
+				{ name => 'offset',		rules => [ {rule => 'integer' } ], error => "Bad offset" },
+				{ name => 'author_email',rules => [ {rule => 'email' } ], error => "Bad author_email" },
             ]
         },
         # service output description
@@ -27,6 +60,32 @@ my $map = [
         
         # maybe POST GET PUT DELETE
         req_method => 'GET'
+    },
+	{
+        # regexp or absolute value for url to service
+        regexp    => '/ahs/projects/project/pulse$',
+        # func name in Backend module
+        func_name => 'remove',
+        # unique name for service - used in javascript validator rules
+        name      => 'REMOVE_PULSE_ITEM',
+        
+        in        => {
+            skip_from_uri => 1,
+            param         => [
+                # some patterns to define field names and validation rules
+                # all rule names - in WOA::Validator::Rules::Base
+				{ name => 'id',         rules => [ {rule => 'integer' } ], required => 1, error => "Bad id" }
+            ]
+        },
+        # service output description
+        out			=>	{
+            mime_type => 'text/javascript',
+            # methods from View - you can implement your own
+            view_method => 'as_json'
+        },
+        
+        # maybe POST GET PUT DELETE
+        req_method => 'DELETE'
     }
 ];
 
@@ -37,7 +96,7 @@ sub get_map { return $map; }
 __END__
 
 
-=head1 REST::Ahs2::REST::Project::Map - [TODO]
+=head1 REST::Ahs2::REST::Pulse::Map - [TODO]
 
 =head2 SYNOPSIS
 

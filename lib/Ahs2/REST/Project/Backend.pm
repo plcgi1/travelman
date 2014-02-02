@@ -64,7 +64,7 @@ sub get {
                 id      => $_->get_column('id'),
                 can_edit=> $can_edit,
                 label   => $formatter->encode_utf($_->get_column('name')),
-                path    => "#/projects/project/".$_->get_column('id')."/view",
+                path    => "#/projects/project/".$_->get_column('id')."/pulse",
                 created => $_->get_column('created'),
                 updated => $_->get_column('updated'),
                 from    => $_->get_column('start'),

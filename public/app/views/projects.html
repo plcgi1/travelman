@@ -1,4 +1,6 @@
-<a ng-show="user.loginStatus==1" href="#/projects/project/new/edit" class="btn"><i class="icon-plus"></i> Добавить</a>
+<div class="round-button pull-right" ng-show="user.loginStatus==1">
+	<a  href="#/projects/project/new/edit"><i class="icon-plus"></i></a>
+</div>
 <div ng-controller="ProjectsCtrl">
 	<ng-include src="'views/lib/projects.html'"></ng-include>
 </div>
